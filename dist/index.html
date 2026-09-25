@@ -15,6 +15,14 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070a12'/%3E%3Cpath d='M12 14h40v9H37v27H27V23H12z' fill='%237b6cff'/%3E%3Cpath d='M41 32h11v18H41z' fill='%236de7ff'/%3E%3C/svg%3E"
     />
     <style>
+      @font-face {
+        font-family: "Sixtyfour";
+        src: url("assets/fonts/Sixtyfour-BLED-SCAN.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
       :root {
         color-scheme: dark;
         --bg: #070a12;
@@ -30,6 +38,7 @@
         --max: 1180px;
         --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        --display: "Sixtyfour", var(--mono);
       }
 
       * {
@@ -106,11 +115,16 @@
       }
 
       .brand-name {
-        font-size: 1.05rem;
+        font-family: var(--display);
+        font-size: 0.86rem;
+        font-variation-settings: "BLED" 14, "SCAN" -18;
+        letter-spacing: 0;
       }
 
       .brand-name span {
         color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.82rem;
         font-weight: 500;
       }
 
@@ -159,10 +173,12 @@
       h1 {
         max-width: 760px;
         margin: 22px 0 24px;
-        font-size: clamp(3.45rem, 7vw, 6.9rem);
-        font-weight: 650;
-        letter-spacing: -0.075em;
-        line-height: 0.9;
+        font-family: var(--display);
+        font-size: clamp(2.25rem, 4.25vw, 4.05rem);
+        font-variation-settings: "BLED" 14, "SCAN" -18;
+        font-weight: 400;
+        letter-spacing: -0.025em;
+        line-height: 1.12;
       }
 
       h1 .cycle {
@@ -246,8 +262,12 @@
 
       .module h2 {
         margin: 26px 0 8px;
-        font-size: 1.32rem;
-        letter-spacing: -0.035em;
+        font-family: var(--display);
+        font-size: 1.02rem;
+        font-variation-settings: "BLED" 10, "SCAN" -14;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        line-height: 1.45;
       }
 
       .module p {
@@ -290,7 +310,7 @@
       }
 
       .module-trx h2 {
-        font-size: 1.55rem;
+        font-size: 1.16rem;
       }
 
       .module-meta {
@@ -352,6 +372,7 @@
       .architecture-copy h2 {
         max-width: 800px;
         margin: 0;
+        font-family: var(--sans);
         font-size: clamp(2.25rem, 5vw, 4.35rem);
         font-weight: 600;
         letter-spacing: -0.06em;
@@ -464,10 +485,12 @@
 
       .product h3 {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 3.5rem);
-        font-weight: 620;
-        letter-spacing: -0.055em;
-        line-height: 1;
+        font-family: var(--display);
+        font-size: clamp(1.45rem, 2.6vw, 2.35rem);
+        font-variation-settings: "BLED" 10, "SCAN" -14;
+        font-weight: 400;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
       }
 
       .product-summary {
@@ -564,9 +587,12 @@
 
       .workflow-step h3 {
         margin: 76px 0 12px;
-        font-family: var(--mono);
-        font-size: 1.08rem;
-        letter-spacing: 0.05em;
+        font-family: var(--display);
+        font-size: 0.96rem;
+        font-variation-settings: "BLED" 8, "SCAN" -12;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1.45;
       }
 
       .workflow-step p {
@@ -654,7 +680,11 @@
 
       .start-card h3 {
         margin: 16px 0 8px;
-        font-size: 1.3rem;
+        font-family: var(--display);
+        font-size: 1rem;
+        font-variation-settings: "BLED" 8, "SCAN" -12;
+        font-weight: 400;
+        line-height: 1.45;
       }
 
       .start-card p {
@@ -796,7 +826,7 @@
         }
 
         h1 {
-          font-size: clamp(3.1rem, 15vw, 4.5rem);
+          font-size: clamp(1.9rem, 8.8vw, 2.7rem);
         }
 
         .actions {
