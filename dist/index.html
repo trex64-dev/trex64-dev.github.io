@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="TREX64 brings together TRX64, C64RE, and the C64U / UE2 Emulator: evidence-led reverse engineering, a cycle-accurate runtime, and complete Ultimate system emulation."
+      content="TREX64 combines the TRX64 reversible runtime, the C64RE MCP workbench, and the C64U / UE2 system emulator for LLM-assisted C64 reverse engineering and development."
     />
     <meta name="theme-color" content="#070a12" />
     <title>TREX64 — C64 Reverse Engineering &amp; Development</title>
@@ -160,8 +160,7 @@
       }
 
       .eyebrow,
-      .module-kicker,
-      .proof-label {
+      .module-kicker {
         margin: 0;
         color: var(--cyan);
         font-family: var(--mono);
@@ -324,29 +323,76 @@
         text-transform: uppercase;
       }
 
-      .proof {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        align-items: center;
-        gap: 20px;
-        margin-top: 18px;
-        padding-top: 20px;
+      .api-first-section {
         border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(120deg, rgba(131, 118, 255, 0.08), transparent 42%),
+          #090d17;
       }
 
-      .proof-label {
-        color: var(--amber);
+      .api-first-inner {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+        gap: clamp(40px, 7vw, 96px);
+        align-items: start;
+        padding: 78px 0;
       }
 
-      .proof-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 22px;
+      .api-first-copy h2 {
+        max-width: 520px;
+        margin: 16px 0 22px;
+        font-family: var(--sans);
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1.05;
+      }
+
+      .api-first-copy p:last-child {
+        margin: 0;
+        color: #c0c6d7;
+        font-size: 1.02rem;
+      }
+
+      .api-surface-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--line);
+      }
+
+      .api-surface {
+        min-height: 270px;
+        padding: 24px;
+        border-right: 1px solid var(--line);
+        background: rgba(13, 18, 32, 0.78);
+      }
+
+      .api-surface:last-child { border-right: 0; }
+
+      .api-surface-label {
         color: var(--muted);
         font-family: var(--mono);
-        font-size: 0.76rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
+
+      .api-surface h3 {
+        margin: 58px 0 12px;
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+
+      .api-surface p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .api-surface-c64re { border-top: 3px solid var(--cyan); }
+      .api-surface-trx { border-top: 3px solid var(--violet); }
+      .api-surface-ue2 { border-top: 3px solid var(--coral); }
 
       .section {
         padding: 112px 0;
@@ -368,8 +414,7 @@
         text-transform: uppercase;
       }
 
-      .section-heading h2,
-      .architecture-copy h2 {
+      .section-heading h2 {
         max-width: 800px;
         margin: 0;
         font-family: var(--sans);
@@ -379,8 +424,7 @@
         line-height: 1;
       }
 
-      .section-heading p,
-      .architecture-copy > p:last-child {
+      .section-heading p {
         max-width: 690px;
         margin: 20px 0 0;
         color: var(--muted);
@@ -551,7 +595,7 @@
 
       .workflow-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         border: 1px solid var(--line);
       }
 
@@ -601,64 +645,126 @@
         font-size: 0.9rem;
       }
 
-      .architecture {
-        display: grid;
-        grid-template-columns: minmax(270px, 0.7fr) minmax(0, 1.3fr);
-        gap: clamp(44px, 8vw, 120px);
-        align-items: center;
-      }
-
-      .architecture-copy h2 {
-        margin-top: 16px;
-      }
-
-      .architecture-map {
-        display: grid;
-        grid-template-columns: 1fr 74px 1fr;
-        grid-template-rows: auto 74px auto;
-        align-items: stretch;
-      }
-
-      .arch-node {
-        padding: 24px;
+      .pipeline {
+        margin-top: 24px;
+        padding: 30px;
         border: 1px solid var(--line);
-        background: var(--surface);
+        background: rgba(5, 7, 13, 0.54);
       }
 
-      .arch-node strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 1.04rem;
-      }
-
-      .arch-node span {
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-
-      .arch-c64re { border-top: 3px solid var(--cyan); }
-      .arch-ue2 { border-top: 3px solid var(--coral); }
-      .arch-trx {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        border-color: var(--violet);
-        background: #12152c;
-      }
-
-      .arch-link {
+      .pipeline-heading {
         display: grid;
-        place-items: center;
-        color: #66708c;
+        grid-template-columns: minmax(210px, 0.5fr) minmax(0, 1fr);
+        gap: 30px;
+        align-items: end;
+        margin-bottom: 28px;
+      }
+
+      .pipeline-heading h3 {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(1.12rem, 2vw, 1.62rem);
+        font-variation-settings: "BLED" 8, "SCAN" -12;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      .pipeline-heading p {
+        max-width: 700px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .pipeline-groups {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .pipeline-group {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        min-width: 0;
+      }
+
+      .pipeline-group-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 38px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        color: var(--muted);
         font-family: var(--mono);
-        font-size: 0.7rem;
-        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
       }
 
-      .arch-link-horizontal { grid-column: 2; }
-      .arch-link-down {
-        grid-column: 1 / -1;
-        grid-row: 2;
+      .pipeline-group-discovery .pipeline-group-label { color: var(--amber); }
+      .pipeline-group-re .pipeline-group-label { color: var(--cyan); }
+
+      .pipeline-card-grid {
+        display: grid;
+        gap: 1px;
+        border: 1px solid var(--line);
+        background: var(--line);
+      }
+
+      .pipeline-group-discovery .pipeline-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pipeline-group-re .pipeline-card-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .pipeline-group-re .pipeline-card { grid-column: span 2; }
+      .pipeline-group-re .pipeline-card:nth-child(n + 4) { grid-column: span 3; }
+
+      .pipeline-card {
+        min-height: 250px;
+        padding: 22px 20px;
+        background: rgba(13, 18, 32, 0.74);
+      }
+
+      .pipeline-phase {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.66rem;
+      }
+
+      .pipeline-card h4 {
+        margin: 44px 0 10px;
+        font-size: 0.9rem;
+        line-height: 1.35;
+      }
+
+      .pipeline-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .pipeline-note {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 24px;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.73rem;
+      }
+
+      .pipeline-note strong {
+        color: var(--ink);
+        font-weight: 600;
       }
 
       .start-section { padding-top: 28px; }
@@ -672,6 +778,7 @@
       .start-card {
         display: flex;
         min-height: 310px;
+        min-width: 0;
         flex-direction: column;
         padding: 26px;
         border: 1px solid var(--line);
@@ -694,6 +801,7 @@
       }
 
       .command {
+        max-width: 100%;
         margin: auto 0 20px;
         padding: 14px;
         border: 1px solid var(--line);
@@ -785,12 +893,25 @@
           border-bottom: 1px solid var(--line);
         }
 
-        .workflow-grid { grid-template-columns: repeat(2, 1fr); }
-        .workflow-step:nth-child(2) { border-right: 0; }
-        .workflow-step:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
-        .workflow-step:nth-child(2)::after { content: none; }
+        .api-first-inner { grid-template-columns: 1fr; }
 
-        .architecture { grid-template-columns: 1fr; }
+        .workflow-grid { grid-template-columns: repeat(2, 1fr); }
+        .workflow-step:nth-child(2),
+        .workflow-step:nth-child(4) { border-right: 0; }
+        .workflow-step:nth-child(-n + 4) { border-bottom: 1px solid var(--line); }
+        .workflow-step:nth-child(2)::after,
+        .workflow-step:nth-child(4)::after { content: none; }
+        .workflow-step:nth-child(5) {
+          grid-column: 1 / -1;
+          min-height: 220px;
+          border-right: 0;
+        }
+
+        .pipeline-group-re .pipeline-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .pipeline-group-re .pipeline-card { grid-column: auto; }
+        .pipeline-group-re .pipeline-card:nth-child(n + 4) { grid-column: auto; }
+        .pipeline-group-re .pipeline-card:last-child { grid-column: 1 / -1; }
+
         .start-grid { grid-template-columns: 1fr; }
         .start-card { min-height: 250px; }
       }
@@ -850,10 +971,15 @@
           grid-row: 1;
         }
 
-        .proof {
-          grid-template-columns: 1fr;
-          gap: 10px;
+        .api-first-inner { padding: 64px 0; }
+        .api-surface-grid { grid-template-columns: 1fr; }
+        .api-surface {
+          min-height: 210px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
         }
+        .api-surface:last-child { border-bottom: 0; }
+        .api-surface h3 { margin-top: 36px; }
 
         .product-media { min-height: 250px; }
         .product-copy { padding: 30px 24px 36px; }
@@ -861,7 +987,10 @@
         .workflow-grid { grid-template-columns: 1fr; }
 
         .workflow-step,
-        .workflow-step:nth-child(2) {
+        .workflow-step:nth-child(2),
+        .workflow-step:nth-child(4),
+        .workflow-step:nth-child(5) {
+          grid-column: auto;
           min-height: 220px;
           border-right: 0;
           border-bottom: 1px solid var(--line);
@@ -871,27 +1000,13 @@
         .workflow-step::after { content: none; }
         .workflow-step h3 { margin-top: 48px; }
 
-        .architecture-map {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto 48px auto 48px auto;
-        }
-
-        .arch-link-horizontal {
-          grid-column: 1;
-          grid-row: 2;
-        }
-
-        .arch-ue2 { grid-row: 3; }
-
-        .arch-link-down {
-          grid-column: 1;
-          grid-row: 4;
-        }
-
-        .arch-trx {
-          grid-column: 1;
-          grid-row: 5;
-        }
+        .pipeline { padding: 22px 18px; }
+        .pipeline-heading { grid-template-columns: 1fr; gap: 12px; }
+        .pipeline-group-discovery .pipeline-card-grid,
+        .pipeline-group-re .pipeline-card-grid { grid-template-columns: 1fr; }
+        .pipeline-group-re .pipeline-card:last-child { grid-column: auto; }
+        .pipeline-card { min-height: 210px; }
+        .pipeline-card h4 { margin-top: 34px; }
 
         .footer-inner { grid-template-columns: 1fr; }
         .footer-links { flex-wrap: wrap; }
@@ -903,11 +1018,13 @@
       <nav class="nav shell" aria-label="Primary navigation">
         <a class="brand" href="#top" aria-label="TREX64 home">
           <span class="brand-mark" aria-hidden="true">T/64</span>
-          <span class="brand-name">TREX64 <span>/ tools for the real machine</span></span>
+          <span class="brand-name">TREX64 <span>/ C64 analysis and emulation tools</span></span>
         </a>
         <div class="nav-links">
-          <a href="#tools">Tools</a>
+          <a href="#api-first">Interfaces</a>
+          <a href="#tools">Components</a>
           <a href="#workflow">Workflow</a>
+          <a href="#install">Install</a>
           <a class="nav-github" href="https://github.com/Jondalar" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </nav>
@@ -916,16 +1033,17 @@
     <main id="top">
       <section class="hero shell" aria-labelledby="hero-title">
         <div>
-          <p class="eyebrow">TREX64 · C64 Reverse Engineering &amp; Development</p>
-          <h1 id="hero-title">Understand the C64.<span class="cycle">Cycle by cycle.</span></h1>
+          <p class="eyebrow">Programmatic C64 analysis and system emulation</p>
+          <h1 id="hero-title">Analyze C64 software.<span class="cycle">Inspect cycle-level behavior.</span></h1>
           <p class="lede">
-            TRX64 runs the machine and rewinds time. C64RE turns bytes into evidence-backed knowledge.
-            The C64U / UE2 Emulator builds a complete Ultimate system around it — with UCI, turbo modes,
-            drives, cartridges, and unmodified firmware.
+            TREX64 combines three tools. TRX64 provides cycle-accurate C64, 1541, and 1581 emulation with rewind
+            and JSON-RPC control. C64RE performs deterministic analysis and verifies byte-identical rebuilds; external
+            LLM agents add semantic annotations and record cross-artifact relationships through MCP. The C64U / UE2 Emulator
+            runs unmodified Ultimate firmware on modeled board hardware backed by TRX64.
           </p>
           <div class="actions">
-            <a class="button" href="#ecosystem">Explore the ecosystem</a>
-            <a class="button button-secondary" href="https://github.com/Jondalar" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+            <a class="button" href="#ecosystem">View system components</a>
+            <a class="button button-secondary" href="https://github.com/Jondalar" target="_blank" rel="noreferrer">Source repositories ↗</a>
           </div>
         </div>
 
@@ -935,19 +1053,19 @@
           </div>
           <div class="map-grid">
             <article class="module module-c64re">
-              <p class="module-kicker">Understand / C64RE</p>
-              <h2>Bytes become knowledge.</h2>
-              <p>Disassembly, findings, and a knowledge graph — backed by a byte-identical rebuild.</p>
+              <p class="module-kicker">Semantic analysis / C64RE</p>
+              <h2>Create verified semantic disassembly.</h2>
+              <p>C64RE performs deterministic disassembly, stores agent-generated semantic annotations and evidence, and verifies rebuilds byte for byte.</p>
             </article>
             <article class="module module-ue2">
-              <p class="module-kicker">System / C64U + UE2 Emulator</p>
-              <h2>The complete Ultimate system.</h2>
-              <p>Firmware and board model around TRX64: UCI, turbo, storage, network, video, and audio.</p>
+              <p class="module-kicker">System / C64U / UE2 Emulator</p>
+              <h2>Emulate the complete Ultimate system.</h2>
+              <p>The emulator combines unmodified Ultimate firmware, modeled board hardware, and TRX64. MCP, scripts, REST, and CI provide control.</p>
             </article>
             <article class="module module-trx">
-              <p class="module-kicker">Runtime foundation / TRX64</p>
-              <h2>The machine. Time. The API.</h2>
-              <p>A cycle-accurate C64 with 1541 and 1581 — headless, reversible, and fully controllable.</p>
+              <p class="module-kicker">Emulation runtime / TRX64</p>
+              <h2>Run and inspect a reversible C64.</h2>
+              <p>TRX64 emulates the C64, 1541, and 1581 with cycle-accurate execution, rewind, headless operation, and JSON-RPC control.</p>
               <div class="module-meta" aria-label="TRX64 capabilities">
                 <span>6510 · VIC-II · SID</span>
                 <span>Rewind</span>
@@ -958,24 +1076,46 @@
           </div>
         </div>
 
-        <div class="proof">
-          <span class="proof-label">Built for evidence</span>
-          <div class="proof-list">
-            <span>Cycle-accurate</span>
-            <span>Reverse debugging</span>
-            <span>Byte-verified</span>
-            <span>Ultimate system emulation</span>
+      </section>
+
+      <section class="api-first-section" id="api-first" aria-labelledby="api-first-title">
+        <div class="api-first-inner shell">
+          <div class="api-first-copy">
+            <p class="section-index">01 / Interfaces</p>
+            <h2 id="api-first-title">Each component exposes its primary functions through a machine-callable interface.</h2>
+            <p>
+              C64RE uses MCP and calls the TRX64 daemon for runtime evidence. TRX64 exposes JSON-RPC and an embeddable
+              Rust core. The C64U / UE2 Emulator embeds that core and adds MCP, REST, scripts, and headless control.
+            </p>
+          </div>
+          <div class="api-surface-grid" aria-label="API-first surfaces across TREX64">
+            <article class="api-surface api-surface-c64re">
+              <span class="api-surface-label">C64RE / MCP</span>
+              <h3>An external LLM drives the C64RE workflow through MCP.</h3>
+              <p>The agent instructs C64RE to extract media and run deterministic analyzers, reads complete listings, writes semantic annotations, and records evidence. A user defines goals and confirms decisions.</p>
+            </article>
+            <article class="api-surface api-surface-trx">
+              <span class="api-surface-label">TRX64 / JSON-RPC + Rust core</span>
+              <h3>Daemon and embedded clients use one runtime implementation.</h3>
+              <p>The CLI, C64RE, scripts, and agents control a reversible session through JSON-RPC. The C64U / UE2 Emulator links the Rust core directly.</p>
+            </article>
+            <article class="api-surface api-surface-ue2">
+              <span class="api-surface-label">C64U / UE2 / MCP + control</span>
+              <h3>Agents operate the emulated Ultimate system locally or in CI.</h3>
+              <p>Automation boots firmware, sends UI and C64 input, inspects video and UART state, calls REST services, asserts results, and shuts down the instance.</p>
+            </article>
           </div>
         </div>
       </section>
+
       <section class="section shell" id="tools" aria-labelledby="tools-title">
         <div class="section-heading">
-          <span class="section-index">01 / The tools</span>
+          <span class="section-index">02 / Components</span>
           <div>
-            <h2 id="tools-title">Three tools. One continuous view of the machine.</h2>
+            <h2 id="tools-title">TRX64 runs the machine; C64RE records analysis and evidence; the C64U / UE2 Emulator runs the Ultimate system.</h2>
             <p>
-              Each product has one clear job. Together they cover the path from the first clue in a binary
-              to a complete, automatable Ultimate system.
+              TRX64 does not own the reverse-engineering analysis pipeline. C64RE contains no emulator and uses the
+              TRX64 daemon when static evidence requires runtime validation.
             </p>
           </div>
         </div>
@@ -983,20 +1123,20 @@
         <div class="products">
           <article class="product product-trx">
             <figure class="product-media">
-              <img src="assets/trx64-cockpit.png" alt="TRX64 C64 output beside its terminal cockpit" width="1600" height="718" loading="lazy" />
-              <figcaption class="media-tag">Live machine + terminal cockpit</figcaption>
+              <img src="assets/trx64-cockpit.png" alt="TRX64 showing C64 output beside its terminal cockpit" width="1600" height="718" loading="lazy" />
+              <figcaption class="media-tag">C64 display and TRX64 CLI cockpit</figcaption>
             </figure>
             <div class="product-copy">
               <p class="product-number">01 · Runtime / TRX64</p>
-              <h3>The machine as an API.</h3>
+              <h3>Run, inspect, and rewind a cycle-accurate C64.</h3>
               <p class="product-summary">
-                A cycle-accurate, headless C64, 1541, and 1581 runtime in Rust — controlled by humans,
-                scripts, and agents.
+                TRX64 is a Rust runtime for the C64, 1541, and 1581. The CLI, JSON-RPC daemon, and embeddable
+                library use one command-dispatch path.
               </p>
               <ul class="feature-list">
-                <li><span>Rewind, reverse step, <code>whowrote</code>, and JAM triage</span></li>
-                <li><span>PAL, NTSC, and PAL-N; disks, cartridges, and expansions</span></li>
-                <li><span>CLI cockpit, JSON-RPC daemon, and embeddable library</span></li>
+                <li><span>Rewinds execution, reverse-steps, identifies the last writer to an address, and diagnoses JAM states</span></li>
+                <li><span>Runs PAL, NTSC, or PAL-N with disks, cartridges, drives, and expansions</span></li>
+                <li><span>Allows a user, a script, and an LLM agent to share one live session</span></li>
               </ul>
               <div class="text-links">
                 <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">Source ↗</a>
@@ -1007,20 +1147,23 @@
 
           <article class="product product-c64re">
             <figure class="product-media">
-              <img src="assets/c64re-semantic-disassembly.png" alt="Semantically named 6502 disassembly in C64RE" width="1400" height="784" loading="lazy" />
-              <figcaption class="media-tag">Semantic disassembly / verified source</figcaption>
+              <img src="assets/c64re-semantic-disassembly.png" alt="6502 disassembly with semantic labels in C64RE" width="1400" height="784" loading="lazy" />
+              <figcaption class="media-tag">Semantically annotated disassembly and verified source</figcaption>
             </figure>
             <div class="product-copy">
               <p class="product-number">02 · Knowledge / C64RE</p>
-              <h3>Bytes become knowledge.</h3>
+              <h3>Convert C64 media to semantically annotated source with byte-verified rebuilds.</h3>
               <p class="product-summary">
-                The MCP-based workbench turns PRGs, cartridges, and disk images into explained, named source
-                that rebuilds byte for byte.
+                C64RE is an MCP workbench for extraction, deterministic analysis, disassembly, annotation, and rebuild
+                verification. A user defines the objective; an external LLM agent reads complete listings, labels segments
+                and routines, and records evidence.
               </p>
               <ul class="feature-list">
-                <li><span>Extraction, heuristic analysis, and semantic annotation</span></li>
-                <li><span>Findings with evidence, address ranges, and artifact lineage</span></li>
-                <li><span>KickAssembler and 64tass rebuilds as byte-level proof</span></li>
+                <li><span>Extracts PRG, CRT, D64, and G64 inputs and runs nine deterministic analyzers in parallel</span></li>
+                <li><span>Uses the LLM to classify segments, name routines, explain control flow, and connect artifacts</span></li>
+                <li><span>Records findings, evidence, address ranges, lineage, flows, and open questions</span></li>
+                <li><span>Updates derived results without overwriting human assertions</span></li>
+                <li><span>Reassembles with KickAssembler or 64tass and compares byte for byte; annotations cannot alter output bytes</span></li>
               </ul>
               <div class="text-links">
                 <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
@@ -1030,21 +1173,21 @@
 
           <article class="product product-ue2">
             <figure class="product-media">
-              <img src="assets/ue2-browser.png" alt="Ultimate file browser running in the C64U and UE2 Emulator" width="640" height="450" loading="lazy" />
-              <figcaption class="media-tag">Ultimate system / TRX64 inside</figcaption>
+              <img src="assets/ue2-browser.png" alt="Ultimate file browser running in the C64U / UE2 Emulator" width="640" height="450" loading="lazy" />
+              <figcaption class="media-tag">Ultimate firmware and board emulation on TRX64</figcaption>
             </figure>
             <div class="product-copy">
-              <p class="product-number">03 · System emulator / C64U + UE2</p>
-              <h3>A complete Ultimate on your computer.</h3>
+              <p class="product-number">03 · System emulator / C64U / UE2</p>
+              <h3>Run unmodified Ultimate firmware on modeled board hardware.</h3>
               <p class="product-summary">
-                Unmodified Ultimate firmware, modeled board hardware, and the complete TRX64 machine
-                form one interactive, automatable system.
+                C64U / UE2 combines a board model, unmodified Ultimate 64 Elite II or C64 Ultimate firmware,
+                and the TRX64 core. It runs interactively, headlessly, or under CI.
               </p>
               <ul class="feature-list">
-                <li><span>UCI, REU and GeoRAM, UltiSID, Ultimate Audio, and turbo up to 64 MHz</span></li>
-                <li><span>Two 1541/1581 drives, Software IEC, 28 internal CRT types, and a modeled expansion slot</span></li>
-                <li><span>SD, USB, networking, REST, web UI, FTP, Telnet, GDB, scripts, and MCP</span></li>
-                <li><span>Ultimate 64 Elite II and C64 Ultimate; windowed, headless, and CI-ready</span></li>
+                <li><span>Provides UCI, turbo modes up to 64 MHz, REU, GeoRAM, UltiSID, and Ultimate Audio</span></li>
+                <li><span>Models two 1541/1581 drives, Software IEC, 28 cartridge types, and the expansion slot</span></li>
+                <li><span>Implements SD and USB storage, networking, REST services, a web UI, FTP, Telnet, GDB, scripts, and MCP</span></li>
+                <li><span>Lets an agent boot firmware, send input, inspect video and UART state, execute tests, and terminate an isolated system instance</span></li>
               </ul>
               <div class="text-links">
                 <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
@@ -1057,92 +1200,140 @@
       <section class="section workflow-section" id="workflow" aria-labelledby="workflow-title">
         <div class="shell">
           <div class="section-heading">
-            <span class="section-index">02 / Workflow</span>
+            <span class="section-index">03 / C64RE workflow</span>
             <div>
-              <h2 id="workflow-title">Do not just observe. Prove it.</h2>
-              <p>The runtime reveals behavior. The workbench turns it into verifiable knowledge. The system emulator places the same machine inside the full Ultimate context.</p>
+              <h2 id="workflow-title">Five project stages. Seven per-artifact analysis phases.</h2>
+              <p>
+                The human defines the objective and approves decisions. An LLM agent invokes C64RE through MCP,
+                interprets the resulting evidence, and persists project knowledge. C64RE performs deterministic
+                analysis and byte comparison. TRX64 supplies runtime evidence for hypotheses derived from static analysis.
+              </p>
             </div>
           </div>
           <div class="workflow-grid">
             <article class="workflow-step">
-              <span class="step-number">01 / RUN</span>
-              <h3>Run the machine</h3>
-              <p>Start original media or a complete Ultimate system under full control.</p>
+              <span class="step-number">01 / ONBOARDING</span>
+              <h3>Initialize the project</h3>
+              <p>Create or resume the project, record the human objective, and select a workflow profile.</p>
             </article>
             <article class="workflow-step">
-              <span class="step-number">02 / REWIND</span>
-              <h3>Rewind time</h3>
-              <p>Go back to the write, jump, or crash and isolate its cause.</p>
+              <span class="step-number">02 / DISCOVERY</span>
+              <h3>Inventory media and loaders</h3>
+              <p>Extract and register every payload, analyze the loader and packer chain, and map medium locations to load addresses.</p>
             </article>
             <article class="workflow-step">
-              <span class="step-number">03 / EXPLAIN</span>
-              <h3>Explain the system</h3>
-              <p>Name structures, connect findings, and keep uncertainty visible.</p>
+              <span class="step-number">03 / REVERSE ENGINEERING</span>
+              <h3>Analyze and annotate payloads</h3>
+              <p>Generate deterministic source, inspect each non-trivial segment, add semantic annotations, connect artifacts, and validate interpretations.</p>
             </article>
             <article class="workflow-step">
-              <span class="step-number">04 / VERIFY</span>
-              <h3>Verify the result</h3>
-              <p>Rebuild source byte for byte or test full-system behavior automatically.</p>
+              <span class="step-number">04 / BUILD</span>
+              <h3>Produce modified artifacts</h3>
+              <p>Apply patches or build the target medium, loader, or feature; retain the rationale, byte changes, and validation evidence.</p>
             </article>
+            <article class="workflow-step">
+              <span class="step-number">05 / RELEASE</span>
+              <h3>Test and release</h3>
+              <p>Run local and external tests, record known issues, create release candidates, and package the final artifact with its documentation.</p>
+            </article>
+          </div>
+
+          <div class="pipeline" aria-labelledby="pipeline-title">
+            <div class="pipeline-heading">
+              <h3 id="pipeline-title">Per-artifact analysis phases</h3>
+              <p>
+                Phases 1–2 run during Discovery. Phases 3–7 run during Reverse Engineering.
+                Each phase has an explicit completion criterion.
+              </p>
+            </div>
+
+            <div class="pipeline-groups">
+              <section class="pipeline-group pipeline-group-discovery" aria-label="Discovery phases">
+                <div class="pipeline-group-label"><span>Discovery</span><span>Phases 1–2</span></div>
+                <div class="pipeline-card-grid">
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">01</span>
+                    <h4>Extraction and Inventory</h4>
+                    <p>Extract payload bytes and register every source and generated artifact. Complete when no visible payload remains unregistered.</p>
+                  </article>
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">02</span>
+                    <h4>Loader / Load Behaviour / Sequence</h4>
+                    <p>Statically disassemble and annotate loader and drive code. Record entry points, load contexts, and the flow to runtime addresses.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="pipeline-group pipeline-group-re" aria-label="Reverse Engineering phases">
+                <div class="pipeline-group-label"><span>Reverse Engineering</span><span>Phases 3–7</span></div>
+                <div class="pipeline-card-grid">
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">03</span>
+                    <h4>Heuristic Disassembly</h4>
+                    <p>Run deterministic analysis and generate first-pass source for KickAssembler and 64tass. Apply no semantic LLM annotations; attempt a rebuild.</p>
+                  </article>
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">04</span>
+                    <h4>Segment Analysis</h4>
+                    <p>The LLM agent inspects each non-trivial segment, classifies it from static evidence, or records an open question.</p>
+                  </article>
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">05</span>
+                    <h4>Semantic Analysis V1</h4>
+                    <p>The LLM agent writes labels, routine explanations, and segment annotations. C64RE re-disassembles and verifies unchanged bytes.</p>
+                  </article>
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">06</span>
+                    <h4>Meta Connections</h4>
+                    <p>The LLM agent links entities and records cross-artifact relations and flows. C64RE preserves artifact lineage and refuted hypotheses.</p>
+                  </article>
+                  <article class="pipeline-card">
+                    <span class="pipeline-phase">07</span>
+                    <h4>Semantic V2</h4>
+                    <p>Refine annotations with project-wide context, perform final rebuild verification, render documentation, and complete the artifact checklist.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+
+            <div class="pipeline-note" aria-label="C64RE workflow principles">
+              <span><strong>Static evidence first.</strong> Read bytes and loader code before requesting runtime evidence.</span>
+              <span><strong>Semantic interpretation.</strong> The LLM records names, explanations, relations, and open questions.</span>
+              <span><strong>Targeted runtime validation.</strong> TRX64 supplies evidence for a stated address-level hypothesis; the agent records whether the evidence confirms or refutes it.</span>
+              <span><strong>Byte verification.</strong> KickAssembler or 64tass rebuilds the source; byte comparison determines equality.</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section shell architecture" aria-labelledby="architecture-title">
-        <div class="architecture-copy">
-          <p class="section-index">03 / Architecture</p>
-          <h2 id="architecture-title">Specialized, not separate.</h2>
-          <p>
-            TREX64 is not a monolith. C64RE preserves meaning and evidence. The C64U / UE2 Emulator models
-            the firmware and Ultimate board. TRX64 provides the same precise, complete C64 machine to both.
-          </p>
-        </div>
-        <div class="architecture-map" aria-label="Technical relationship between the three tools">
-          <div class="arch-node arch-c64re">
-            <strong>C64RE</strong>
-            <span>Knowledge graph · disassembly · evidence</span>
-          </div>
-          <div class="arch-link arch-link-horizontal">shared<br />interfaces</div>
-          <div class="arch-node arch-ue2">
-            <strong>C64U / UE2 Emulator</strong>
-            <span>Firmware · board hardware · complete system</span>
-          </div>
-          <div class="arch-link arch-link-down">JSON-RPC / register interface ↓</div>
-          <div class="arch-node arch-trx">
-            <strong>TRX64</strong>
-            <span>6510 · VIC-II · SID · CIA · 1541/1581 · cartridges · UCI · turbo · reversible time</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section shell start-section" aria-labelledby="start-title">
+      <section class="section shell start-section" id="install" aria-labelledby="start-title">
         <div class="section-heading">
-          <span class="section-index">04 / Start</span>
+          <span class="section-index">04 / Install and run</span>
           <div>
-            <h2 id="start-title">The shortest path to a running machine.</h2>
-            <p>ROMs, firmware, and commercial media are intentionally not included. Supply them from your own legally obtained sources.</p>
+            <h2 id="start-title">Install and run the tools.</h2>
+            <p>C64 ROMs, Ultimate firmware, and third-party media are not distributed with these projects. Supply files from legally obtained copies.</p>
           </div>
         </div>
         <div class="start-grid">
           <article class="start-card">
             <p class="product-number">TRX64 / macOS</p>
-            <h3>Start the runtime</h3>
-            <p>Install the CLI cockpit and native emulator window.</p>
+            <h3>Install and open TRX64</h3>
+            <p>Homebrew installs <code>trx64cli</code> and <code>trx64-daemon</code>. Place C64 ROMs in <code>~/.trx64/roms</code> or pass <code>--rom-dir</code>.</p>
             <div class="command"><span class="prompt">$</span> brew install jondalar/tap/trx64<br /><span class="prompt">$</span> trx64cli --window</div>
             <a href="https://github.com/Jondalar/TRX64#install" target="_blank" rel="noreferrer">All platforms ↗</a>
           </article>
           <article class="start-card">
             <p class="product-number">C64RE / source</p>
-            <h3>Build the workbench</h3>
-            <p>Run the workbench, MCP server, and UI from source.</p>
-            <div class="command"><span class="prompt">$</span> npm install &amp;&amp; npm run build<br /><span class="prompt">$</span> npm run ui:serve</div>
+            <h3>Build and run C64RE</h3>
+            <p>Build the MCP server and workbench, then serve the API and UI on <code>127.0.0.1:4310</code>. Configure <code>C64RE_PROJECT_DIR</code> in the MCP client.</p>
+            <div class="command"><span class="prompt">$</span> git clone https://github.com/Jondalar/C64ReverseEngineeringMCP.git<br /><span class="prompt">$</span> cd C64ReverseEngineeringMCP &amp;&amp; npm install &amp;&amp; npm run build<br /><span class="prompt">$</span> npm run ui:serve</div>
             <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP#setup" target="_blank" rel="noreferrer">Open setup ↗</a>
           </article>
           <article class="start-card">
             <p class="product-number">C64U / UE2 · macOS</p>
-            <h3>Start the complete system</h3>
-            <p>Install the Ultimate system emulator, then attach your local firmware and ROMs.</p>
-            <div class="command"><span class="prompt">$</span> brew install jondalar/ue2emu/ue2emu<br /><span class="prompt">$</span> ue2emu run --help</div>
+            <h3>Install and configure UE2</h3>
+            <p>Create a flash image from <code>update.ue2</code>, supply the <code>roms</code> directory from a 1541ultimate checkout, and start the firmware.</p>
+            <div class="command"><span class="prompt">$</span> brew install jondalar/ue2emu/ue2emu<br /><span class="prompt">$</span> ue2emu install --update update.ue2 --flash flash.bin --roms 1541ultimate/roms --yes --c64-roms<br /><span class="prompt">$</span> ue2emu run --firmware update.ue2 --flash flash.bin --roms 1541ultimate/roms --net user</div>
             <a href="https://github.com/Jondalar/UE2-C64U-Emulator#getting-started" target="_blank" rel="noreferrer">Getting started ↗</a>
           </article>
         </div>
@@ -1152,8 +1343,8 @@
     <footer class="site-footer">
       <div class="footer-inner shell">
         <div>
-          <p class="footer-brand">TREX64 / C64 Reverse Engineering &amp; Development</p>
-          <p class="footer-note">Independent open-source tools for researching, developing, and preserving C64 software. TRX64, C64RE, and the C64U / UE2 Emulator are GPL-3.0-or-later.</p>
+          <p class="footer-brand">TREX64 / C64 reverse-engineering and development tools</p>
+          <p class="footer-note">TRX64, C64RE, and the C64U / UE2 Emulator are independent projects licensed under GPL-3.0-or-later. ROMs, firmware, and third-party media are not included and retain their respective licenses.</p>
         </div>
         <nav class="footer-links" aria-label="Project links">
           <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">TRX64</a>
