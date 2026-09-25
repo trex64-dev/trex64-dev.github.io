@@ -587,6 +587,86 @@
         text-underline-offset: 5px;
       }
 
+      .graph-spec {
+        margin-top: 28px;
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(120deg, rgba(91, 223, 238, 0.07), transparent 38%),
+          rgba(9, 13, 23, 0.94);
+      }
+
+      .graph-spec-head {
+        display: grid;
+        grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+        gap: 32px;
+        padding: 34px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .graph-spec-label,
+      .graph-spec-number {
+        margin: 0;
+        color: var(--cyan);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .graph-spec-head h3 {
+        max-width: 820px;
+        margin: 0;
+        font-family: var(--sans);
+        font-size: clamp(1.8rem, 3.5vw, 3.1rem);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1.04;
+      }
+
+      .graph-spec-head p:last-child {
+        max-width: 790px;
+        margin: 18px 0 0;
+        color: var(--muted);
+      }
+
+      .graph-spec-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .graph-spec-card {
+        min-width: 0;
+        min-height: 310px;
+        padding: 28px;
+        border-right: 1px solid var(--line);
+      }
+
+      .graph-spec-card:last-child { border-right: 0; }
+
+      .graph-spec-card h4 {
+        margin: 62px 0 14px;
+        font-family: var(--display);
+        font-size: 1rem;
+        font-variation-settings: "BLED" 8, "SCAN" -12;
+        font-weight: 400;
+        line-height: 1.45;
+      }
+
+      .graph-spec-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .graph-spec-foot {
+        margin: 0;
+        padding: 22px 28px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.76rem;
+      }
+
       .workflow-section {
         border-top: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
@@ -895,6 +975,15 @@
 
         .api-first-inner { grid-template-columns: 1fr; }
 
+        .graph-spec-head { grid-template-columns: 1fr; }
+        .graph-spec-grid { grid-template-columns: 1fr; }
+        .graph-spec-card {
+          min-height: 240px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .graph-spec-card:last-child { border-bottom: 0; }
+
         .workflow-grid { grid-template-columns: repeat(2, 1fr); }
         .workflow-step:nth-child(2),
         .workflow-step:nth-child(4) { border-right: 0; }
@@ -984,6 +1073,11 @@
         .product-media { min-height: 250px; }
         .product-copy { padding: 30px 24px 36px; }
 
+        .graph-spec-head { padding: 26px 22px; }
+        .graph-spec-card { padding: 24px 22px; }
+        .graph-spec-card h4 { margin-top: 42px; }
+        .graph-spec-foot { padding: 20px 22px; }
+
         .workflow-grid { grid-template-columns: 1fr; }
 
         .workflow-step,
@@ -1037,9 +1131,10 @@
           <h1 id="hero-title">Analyze C64 software.<span class="cycle">Inspect cycle-level behavior.</span></h1>
           <p class="lede">
             TREX64 combines three tools. TRX64 provides cycle-accurate C64, 1541, and 1581 emulation with rewind
-            and JSON-RPC control. C64RE performs deterministic analysis and verifies byte-identical rebuilds; external
-            LLM agents add semantic annotations and record cross-artifact relationships through MCP. The C64U / UE2 Emulator
-            runs unmodified Ultimate firmware on modeled board hardware backed by TRX64.
+            and JSON-RPC control. C64RE imports deterministic analysis into a persistent typed 6502 graph, provides
+            pre-edit impact queries, and verifies rebuilt output byte for byte. External LLM agents query the graph
+            through MCP and add semantic annotations and evidence. The C64U / UE2 Emulator runs unmodified Ultimate
+            firmware on modeled board hardware backed by TRX64.
           </p>
           <div class="actions">
             <a class="button" href="#ecosystem">View system components</a>
@@ -1054,8 +1149,8 @@
           <div class="map-grid">
             <article class="module module-c64re">
               <p class="module-kicker">Semantic analysis / C64RE</p>
-              <h2>Create verified semantic disassembly.</h2>
-              <p>C64RE performs deterministic disassembly, stores agent-generated semantic annotations and evidence, and verifies rebuilds byte for byte.</p>
+              <h2>Build an evidence-linked 6502 analysis graph.</h2>
+              <p>C64RE imports deterministic reports to build typed control-flow and memory-access relations and infer routine contracts. Agents add semantic annotations; reassembly verifies output byte for byte.</p>
             </article>
             <article class="module module-ue2">
               <p class="module-kicker">System / C64U / UE2 Emulator</p>
@@ -1092,7 +1187,7 @@
             <article class="api-surface api-surface-c64re">
               <span class="api-surface-label">C64RE / MCP</span>
               <h3>An external LLM drives the C64RE workflow through MCP.</h3>
-              <p>The agent instructs C64RE to extract media and run deterministic analyzers, reads complete listings, writes semantic annotations, and records evidence. A user defines goals and confirms decisions.</p>
+              <p>The agent instructs C64RE to extract media and run deterministic analyzers, queries the resulting typed 6502 graph, reads complete listings, writes semantic annotations, and records evidence.</p>
             </article>
             <article class="api-surface api-surface-trx">
               <span class="api-surface-label">TRX64 / JSON-RPC + Rust core</span>
@@ -1152,18 +1247,21 @@
             </figure>
             <div class="product-copy">
               <p class="product-number">02 · Knowledge / C64RE</p>
-              <h3>Convert C64 media to semantically annotated source with byte-verified rebuilds.</h3>
+              <h3>Generate source and a typed 6502 analysis graph from C64 media.</h3>
               <p class="product-summary">
-                C64RE is an MCP workbench for extraction, deterministic analysis, disassembly, annotation, and rebuild
-                verification. A user defines the objective; an external LLM agent reads complete listings, labels segments
-                and routines, and records evidence.
+                C64RE is an MCP workbench for media extraction, deterministic disassembly, typed graph construction,
+                semantic annotation, pre-edit impact queries, and byte-for-byte comparison of rebuilt output with the
+                imported artifact. A user defines the objective; an external LLM agent reads complete listings, labels
+                segments and routines, and records evidence.
               </p>
               <ul class="feature-list">
                 <li><span>Extracts PRG, CRT, D64, and G64 inputs and runs nine deterministic analyzers in parallel</span></li>
-                <li><span>Uses the LLM to classify segments, name routines, explain control flow, and connect artifacts</span></li>
-                <li><span>Records findings, evidence, address ranges, lineage, flows, and open questions</span></li>
-                <li><span>Updates derived results without overwriting human assertions</span></li>
-                <li><span>Reassembles with KickAssembler or 64tass and compares byte for byte; annotations cannot alter output bytes</span></li>
+                <li><span>Builds typed relations from routine and label nodes to address, zero-page, ROM, and hardware-register nodes for calls, jumps, branches, memory accesses, and pointer references</span></li>
+                <li><span>Computes routine contracts: inferred inputs and outputs, clobbers, preserved registers and flags, stack effects, call-site arguments, and unresolved exits</span></li>
+                <li><span>The <code>change_impact</code> query reports incoming control flow, shared-state dependencies, claims affected by the change, inferred state-preservation requirements, and unresolved control-flow paths</span></li>
+                <li><span>External LLM agents classify segments, name routines, explain control flow, and connect artifacts</span></li>
+                <li><span>Stores findings, supporting evidence, artifact lineage, control-flow and memory-access relations, and open questions; re-analysis does not overwrite human assertions</span></li>
+                <li><span>Reassembles with KickAssembler or 64tass and compares output with the imported artifact byte for byte; annotations do not modify output bytes</span></li>
               </ul>
               <div class="text-links">
                 <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
@@ -1195,6 +1293,39 @@
             </div>
           </article>
         </div>
+
+        <section class="graph-spec" aria-labelledby="graph-spec-title">
+          <div class="graph-spec-head">
+            <p class="graph-spec-label">C64RE / Analysis output</p>
+            <div>
+              <h3 id="graph-spec-title">C64RE imports each deterministic analysis report into a persistent typed graph of 6502 code and data.</h3>
+              <p>
+                Deterministic results and human assertions are stored in separate layers in <code>knowledge/graph.sqlite</code>.
+                Applied semantic annotations are stored in the human layer and retained across re-analysis. Trace imports
+                add observed execution and memory-access edges without replacing static evidence. MCP tools resolve nodes,
+                traverse typed edges, find control-flow paths, and execute impact queries against the same graph.
+              </p>
+            </div>
+          </div>
+          <div class="graph-spec-grid">
+            <article class="graph-spec-card">
+              <p class="graph-spec-number">01 / Typed relations</p>
+              <h4>Model control flow, memory access, and machine resources.</h4>
+              <p>The graph stores routine, label, address, zero-page, ROM, and hardware-register nodes. Typed edges represent calls, ROM calls, jumps, branches, reads, writes, indirect accesses, and pointer references. Artifact, cartridge-bank, and drive-CPU identifiers distinguish identical 16-bit addresses. Each edge stores supporting evidence and a confidence value.</p>
+            </article>
+            <article class="graph-spec-card">
+              <p class="graph-spec-number">02 / Routine contracts</p>
+              <h4>Infer routine contracts from 6502 code.</h4>
+              <p>C64RE infers inputs, outputs, clobbers, preserved registers and flags, stack effects, call-site arguments, patched operands, and unresolved exits. Analysis includes known ROM ABIs and recursive call relationships; unresolved callees leave contracts partial.</p>
+            </article>
+            <article class="graph-spec-card">
+              <p class="graph-spec-number">03 / Change impact</p>
+              <h4>Identify affected code and state before changing bytes.</h4>
+              <p><code>change_impact</code> traverses incoming call, jump, and branch edges; identifies readers of written addresses and references through pointer and jump tables; and finds claims that may be invalidated. It reports inferred state-preservation requirements. If trace data is available, the report includes observed raster-line timing, worst observed line occupancy, and remaining margin. Unresolved indirect jumps, self-modifying-code paths, and drive-CPU paths are reported as <code>UNKNOWN</code> rather than low risk.</p>
+            </article>
+          </div>
+          <p class="graph-spec-foot">Graph views: force-directed layout · structural layers · concentric rings centered on a selected node · address axis with one lane per bank</p>
+        </section>
       </section>
 
       <section class="section workflow-section" id="workflow" aria-labelledby="workflow-title">
@@ -1224,12 +1355,12 @@
             <article class="workflow-step">
               <span class="step-number">03 / REVERSE ENGINEERING</span>
               <h3>Analyze and annotate payloads</h3>
-              <p>Generate deterministic source, inspect each non-trivial segment, add semantic annotations, connect artifacts, and validate interpretations.</p>
+              <p>Generate deterministic first-pass source and import its analysis report into the typed 6502 graph. Inspect each non-trivial segment, add semantic annotations, connect artifacts, and validate each interpretation against recorded evidence.</p>
             </article>
             <article class="workflow-step">
               <span class="step-number">04 / BUILD</span>
               <h3>Produce modified artifacts</h3>
-              <p>Apply patches or build the target medium, loader, or feature; retain the rationale, byte changes, and validation evidence.</p>
+              <p>Run <code>change_impact</code> before changing bytes. Apply patches or implement the target medium, loader, or feature; record the rationale, modified byte ranges, and validation evidence.</p>
             </article>
             <article class="workflow-step">
               <span class="step-number">05 / RELEASE</span>
@@ -1270,7 +1401,7 @@
                   <article class="pipeline-card">
                     <span class="pipeline-phase">03</span>
                     <h4>Heuristic Disassembly</h4>
-                    <p>Run deterministic analysis and generate first-pass source for KickAssembler and 64tass. Apply no semantic LLM annotations; attempt a rebuild.</p>
+                    <p>Run deterministic analysis and import the report into the typed 6502 graph. Generate first-pass source for KickAssembler and 64tass without semantic annotations, then attempt a rebuild.</p>
                   </article>
                   <article class="pipeline-card">
                     <span class="pipeline-phase">04</span>
@@ -1280,7 +1411,7 @@
                   <article class="pipeline-card">
                     <span class="pipeline-phase">05</span>
                     <h4>Semantic Analysis V1</h4>
-                    <p>The LLM agent writes labels, routine explanations, and segment annotations. C64RE re-disassembles and verifies unchanged bytes.</p>
+                    <p>The LLM agent proposes labels, routine explanations, and segment annotations. After application, C64RE stores them in the human graph layer, re-disassembles the artifact, and compares rebuilt output with the imported artifact byte for byte.</p>
                   </article>
                   <article class="pipeline-card">
                     <span class="pipeline-phase">06</span>
