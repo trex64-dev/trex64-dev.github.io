@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="TREX64 combines the TRX64 reversible runtime, the C64RE MCP workbench, and the C64U / UE2 system emulator for LLM-assisted C64 reverse engineering and development."
+      content="TREX64 combines the TRX64 reversible runtime, the C64RE MCP workbench, and the C64U / UE2 Emulator, an Ultimate target environment for firmware and Made for Ultimate software, for LLM-assisted C64 reverse engineering and development."
     />
     <meta name="theme-color" content="#070a12" />
     <title>TREX64 — C64 Reverse Engineering &amp; Development</title>
@@ -102,16 +102,6 @@
         font-family: var(--mono);
         font-weight: 700;
         letter-spacing: -0.035em;
-      }
-
-      .brand-mark {
-        display: grid;
-        width: 34px;
-        height: 34px;
-        place-items: center;
-        border: 1px solid var(--violet);
-        color: var(--violet);
-        font-size: 0.75rem;
       }
 
       .brand-name {
@@ -1111,7 +1101,6 @@
     <header class="site-header">
       <nav class="nav shell" aria-label="Primary navigation">
         <a class="brand" href="#top" aria-label="TREX64 home">
-          <span class="brand-mark" aria-hidden="true">T/64</span>
           <span class="brand-name">TREX64 <span>/ C64 analysis and emulation tools</span></span>
         </a>
         <div class="nav-links">
@@ -1133,8 +1122,9 @@
             TREX64 combines three tools. TRX64 provides cycle-accurate C64, 1541, and 1581 emulation with rewind
             and JSON-RPC control. C64RE imports deterministic analysis into a persistent typed 6502 graph, provides
             pre-edit impact queries, and verifies rebuilt output byte for byte. External LLM agents query the graph
-            through MCP and add semantic annotations and evidence. The C64U / UE2 Emulator runs unmodified Ultimate
-            firmware on modeled board hardware backed by TRX64.
+            through MCP and add semantic annotations and evidence. The C64U / UE2 Emulator provides the Ultimate target
+            environment for firmware validation and Made for Ultimate software development: unmodified firmware, UCI,
+            turbo modes up to 64 MHz, Ultimate Audio, and modeled board hardware backed by TRX64.
           </p>
           <div class="actions">
             <a class="button" href="#ecosystem">View system components</a>
@@ -1154,8 +1144,8 @@
             </article>
             <article class="module module-ue2">
               <p class="module-kicker">System / C64U / UE2 Emulator</p>
-              <h2>Emulate the complete Ultimate system.</h2>
-              <p>The emulator combines unmodified Ultimate firmware, modeled board hardware, and TRX64. MCP, scripts, REST, and CI provide control.</p>
+              <h2>Develop and test for the Ultimate platform.</h2>
+              <p>UE2 runs unmodified firmware and C64 software that uses UCI, turbo modes, REU, Ultimate Audio, and other C64U-specific interfaces. MCP, scripts, REST, and CI provide control.</p>
             </article>
             <article class="module module-trx">
               <p class="module-kicker">Emulation runtime / TRX64</p>
@@ -1196,8 +1186,8 @@
             </article>
             <article class="api-surface api-surface-ue2">
               <span class="api-surface-label">C64U / UE2 / MCP + control</span>
-              <h3>Agents operate the emulated Ultimate system locally or in CI.</h3>
-              <p>Automation boots firmware, sends UI and C64 input, inspects video and UART state, calls REST services, asserts results, and shuts down the instance.</p>
+              <h3>Agents test firmware and Made for Ultimate software locally or in CI.</h3>
+              <p>Automation boots firmware, loads C64 software, sends UI and C64 input, inspects video and UART state, calls REST services, asserts results, and shuts down the instance.</p>
             </article>
           </div>
         </div>
@@ -1207,7 +1197,7 @@
         <div class="section-heading">
           <span class="section-index">02 / Components</span>
           <div>
-            <h2 id="tools-title">TRX64 runs the machine; C64RE records analysis and evidence; the C64U / UE2 Emulator runs the Ultimate system.</h2>
+            <h2 id="tools-title">TRX64 runs the C64; C64RE records analysis and evidence; the C64U / UE2 Emulator provides the Ultimate target environment.</h2>
             <p>
               TRX64 does not own the reverse-engineering analysis pipeline. C64RE contains no emulator and uses the
               TRX64 daemon when static evidence requires runtime validation.
@@ -1272,20 +1262,22 @@
           <article class="product product-ue2">
             <figure class="product-media">
               <img src="assets/ue2-browser.png" alt="Ultimate file browser running in the C64U / UE2 Emulator" width="640" height="450" loading="lazy" />
-              <figcaption class="media-tag">Ultimate firmware and board emulation on TRX64</figcaption>
+              <figcaption class="media-tag">Ultimate target: firmware, UCI, and C64 software on TRX64</figcaption>
             </figure>
             <div class="product-copy">
-              <p class="product-number">03 · System emulator / C64U / UE2</p>
-              <h3>Run unmodified Ultimate firmware on modeled board hardware.</h3>
+              <p class="product-number">03 · Ultimate target / C64U / UE2</p>
+              <h3>Develop firmware and Made for Ultimate software on an emulated target.</h3>
               <p class="product-summary">
-                C64U / UE2 combines a board model, unmodified Ultimate 64 Elite II or C64 Ultimate firmware,
-                and the TRX64 core. It runs interactively, headlessly, or under CI.
+                C64U / UE2 combines unmodified Ultimate 64 Elite II or C64 Ultimate firmware, modeled board hardware,
+                and the TRX64 core. C64 programs can use UCI, the Ultimate speed registers, REU, Ultimate Audio, and
+                other C64U-specific interfaces. The system runs interactively, headlessly, or under CI.
               </p>
               <ul class="feature-list">
-                <li><span>Provides UCI, turbo modes up to 64 MHz, REU, GeoRAM, UltiSID, and Ultimate Audio</span></li>
+                <li><span>Implements UCI register windows and the unmodified firmware command targets used by Made for Ultimate software</span></li>
+                <li><span>Provides C64U turbo modes up to 64 MHz, REU, GeoRAM, UltiSID, and Ultimate Audio</span></li>
                 <li><span>Models two 1541/1581 drives, Software IEC, 28 cartridge types, and the expansion slot</span></li>
                 <li><span>Implements SD and USB storage, networking, REST services, a web UI, FTP, Telnet, GDB, scripts, and MCP</span></li>
-                <li><span>Lets an agent boot firmware, send input, inspect video and UART state, execute tests, and terminate an isolated system instance</span></li>
+                <li><span>Lets an agent boot firmware, load C64 software, send input, inspect video and UART state, execute tests, and terminate an isolated system instance</span></li>
               </ul>
               <div class="text-links">
                 <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
