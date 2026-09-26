@@ -1446,11 +1446,11 @@
             <a href="https://github.com/Jondalar/TRX64#install" target="_blank" rel="noreferrer">All platforms ↗</a>
           </article>
           <article class="start-card">
-            <p class="product-number">C64RE / source</p>
-            <h3>Build and run C64RE</h3>
-            <p>Build the MCP server and workbench, then serve the API and UI on <code>127.0.0.1:4310</code>. Configure <code>C64RE_PROJECT_DIR</code> in the MCP client.</p>
-            <div class="command"><span class="prompt">$</span> git clone https://github.com/Jondalar/C64ReverseEngineeringMCP.git<br /><span class="prompt">$</span> cd C64ReverseEngineeringMCP &amp;&amp; npm install &amp;&amp; npm run build<br /><span class="prompt">$</span> npm run ui:serve</div>
-            <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP#setup" target="_blank" rel="noreferrer">Open setup ↗</a>
+            <p class="product-number">C64RE / npm · Node 22+</p>
+            <h3>Install C64RE and its runtime</h3>
+            <p><code>npx</code> fetches the MCP server <code>@trex64/c64re</code> on first use. <code>runtime install</code> downloads the pinned TRX64 daemon and verifies its checksum. The MCP client runs <code>npx -y @trex64/c64re</code> with <code>C64RE_PROJECT_DIR</code> set.</p>
+            <div class="command"><span class="prompt">$</span> npx -y @trex64/c64re --help<br /><span class="prompt">$</span> npx @trex64/c64re runtime install</div>
+            <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP/blob/master/INSTALL.md" target="_blank" rel="noreferrer">Install guide ↗</a>
           </article>
           <article class="start-card">
             <p class="product-number">C64U / UE2 · macOS</p>
