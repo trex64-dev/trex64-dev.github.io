@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="C64 projects built with C64RE and TRX64: full engine reverse engineering, EasyFlash conversion, behaviour-driven testing, and a 6502 code graph."
+    />
+    <meta name="theme-color" content="#070a12" />
+    <title>TREX64 — Examples</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070a12'/%3E%3Cpath d='M12 14h40v9H37v27H27V23H12z' fill='%237b6cff'/%3E%3Cpath d='M41 32h11v18H41z' fill='%236de7ff'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="TREX64 home">
+          <span class="brand-name">TREX64 <span>/ C64 analysis and emulation tools</span></span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#api-first">Interfaces</a>
+          <a href="index.html#tools">Components</a>
+          <a href="index.html#workflow">Workflow</a>
+          <a href="index.html#install">Install</a>
+          <a href="examples.html" aria-current="page">Examples</a>
+          <a class="nav-github" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="examples-hero shell" aria-labelledby="examples-title">
+        <span class="section-index">05 / Examples</span>
+        <h1 id="examples-title">Real C64 projects built with C64RE and TRX64.</h1>
+        <p>
+          Each example is one project and one capability. Code excerpts are short illustrations from commercial
+          games; the games and their code remain the property of their copyright holders.
+        </p>
+        <ul class="hook-index">
+          <li><a href="#engine"><span>Wasteland</span>Full engine reverse engineering</a></li>
+          <li><a href="#easyflash"><span>Accolade Comics</span>Disk-to-EasyFlash conversion</a></li>
+          <li><a href="#bdt"><span>Last Ninja engine</span>Behaviour-driven testing</a></li>
+          <li><a href="#graph"><span>Neuromancer</span>A code graph for 6502 assembler</a></li>
+        </ul>
+      </section>
+
+      <section class="case shell" id="engine" aria-labelledby="engine-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">01 · Full engine reverse engineering</p>
+            <h2 id="engine-title">The complete Wasteland engine, readable and editable.</h2>
+            <p class="case-project">Wasteland · Interplay, 1988 · 4 disk sides</p>
+            <p class="case-summary">
+              The engine is disassembled and annotated end to end. Its data model — area records, scene scripts,
+              foe records, the 5-bit text codec — is decoded. The game runs from one EasyFlash cartridge with a
+              persistent world, and a web editor reads and writes the original record format.
+            </p>
+          </div>
+          <figure class="case-figure">
+            <img src="assets/examples/wasteland-editor-areas.png" alt="Wasteland editor showing an area map, its record data and the area's foes" width="1400" height="784" loading="lazy" />
+            <figcaption>Wasteland editor: area map, record data and foes, decoded from the original records</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Annotated engine source: 7,226 lines. An API jump table at $0200–$04FF with 197 vectors is the interception surface for the cartridge backend.</span></li>
+              <li><span>Extraction verified in both directions: 197 directory entries, 0 missing, 0 orphans.</span></li>
+              <li><span>Cartridge port with a unified loader, per-file packing and a flash journal that keeps the world state across sessions.</span></li>
+              <li><span>An editor for areas, texts, portraits and quests, with a byte-exact serializer back to the game's format.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Understanding from context</h3>
+            <ul class="feature-list">
+              <li><span>Portraits carry no colour data of their own. This follows from the renderer, the fixed window colour setup and the foe records, whose byte 7 selects the portrait. Result: all 88 portraits export with their names.</span></li>
+              <li><span>Text ids, items and paragraph triggers connect through the scene scripts. The editor derives a cross-area quest graph from item ids and keywords.</span></li>
+              <li><span>Verification: the text codec re-encodes all 42 records with 0 differences. The engine's own record routine returns identical results for 4,407 (group, id) pairs; after a cartridge boot, live RAM matches the repacked data in 9,206 of 9,206 bytes.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="case shell" id="easyflash" aria-labelledby="easyflash-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">02 · Disk-to-EasyFlash conversion</p>
+            <h2 id="easyflash-title">Six disk sides, one cartridge, one replaced routine.</h2>
+            <p class="case-project">Accolade Comics · Accolade, 1987 · released 2026 on <a href="https://csdb.dk/release/?id=261918" target="_blank" rel="noreferrer">CSDb ↗</a></p>
+            <p class="case-summary">
+              Six floppy sides with a custom loader and copy protection became one 1 MB EasyFlash image
+              (1,050,688 bytes). The build is reproducible and byte-identical. Semantic annotation made the
+              loader architecture readable, so the port replaces one engine routine and keeps the rest byte-exact.
+            </p>
+          </div>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/accolade-ef-menu.png" alt="Accolade Comics main menu running from the EasyFlash build" width="384" height="120" loading="lazy" />
+            <figcaption>Main menu, running from the EasyFlash build</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Loader decoded: drive code uploaded to $0402, 2-byte key-addressed files, lookup-table pages; 728 unique files extracted.</span></li>
+              <li><span>Only the sector-load routine at $1998 is replaced; it serves bytes from cartridge banks. Dispatcher $0C23, scene table $0900, sector assembler $0D46 and the script bytecode VM stay byte-exact.</span></li>
+              <li><span>Protection checks are answered with a synthesised directory sector; save games are written to flash through EAPI.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Semantic annotation, same bytes</h3>
+            <p class="case-summary">
+              The deterministic disassembler produces addresses and generated labels. Semantic annotation adds
+              routine names, contracts and caller references. The contract below is consistent with the code: the
+              routine calls itself for lookup-table pages, calls the allocator, inserts a scene entry and streams
+              sectors through $1998.
+            </p>
+          </div>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Before · deterministic disassembly</figcaption>
+<pre><span class="l">W0C23:</span> <span class="c">// referenced from W0800, W0C5B, W1810, W1C46, ...</span>
+      lda  $06
+      pha
+      lda  $07
+      pha
+      txa
+      pha
+      tya
+      pha
+      jsr  W132D
+      bcs  W0C37
+      lda  #$00
+      jmp  W0E5C</pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>After · semantic annotation</figcaption>
+<pre><span class="c">/* MAIN_DISPATCHER ($0C23-$0E71)
+ * Primary file loader/dispatcher. X=key_hi, Y=key_lo.
+ * Searches scene table first (cache hit path). On miss:
+ * recursively loads LUT pages, allocates memory, inserts
+ * a scene entry, streams sector data via $1998.
+ * Returns C=0 success, or C=1 error with A=error code. */</span>
+<span class="l">main_dispatcher:</span> <span class="c">// referenced from api_jmp_load, init_post_load, ...</span>
+      ...
+      jsr  search_entry
+      bcs  dispatch_check_lut_page_1
+      lda  #$00
+      jmp  dispatch_epilog</pre>
+          </figure>
+        </div>
+        <p class="code-note">Excerpt from Accolade Comics (© 1987 Accolade). Routine header shortened.</p>
+      </section>
+
+      <section class="case shell" id="bdt" aria-labelledby="bdt-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">03 · Behaviour-driven testing</p>
+            <h2 id="bdt-title">Three Last Ninja games, one engine, zero differences.</h2>
+            <p class="case-project">Last Ninja 1–3 · System 3 · unified engine</p>
+            <p class="case-summary">
+              The mechanics of three games are merged into one data-driven engine. Every migration step is gated
+              by tests that run the original game and the new engine on identical input and compare the results.
+              A hypothesis comes from reading the code; the test confirms it.
+            </p>
+            <span class="case-status">Ongoing work</span>
+          </div>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/ln2-lockstep-side-by-side.png" alt="Last Ninja 2 level 1: the original game and the unified engine at the same lock-step pass" width="1544" height="560" loading="lazy" />
+            <figcaption>Lock-step pass 230: original (left), unified engine (right). The HUD differs by design.</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>How behaviour is tested</h3>
+            <ul class="feature-list">
+              <li><span>Scenarios in Gherkin: given a real cartridge image, wait frames, hold the joystick, then read memory. Each run uses a private headless TRX64 machine.</span></li>
+              <li><span>Replay: the original routine and the new routine run on identical inputs — 833,814 wall tests for Last Ninja, 608,334 for Last Ninja 2. Pass means 0 differences.</span></li>
+              <li><span>Lock-step: the original game and the new engine run side by side with the same input and random seed and are compared at checkpoints.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>What it found</h3>
+            <ul class="feature-list">
+              <li><span>Last Ninja 2, level 6: the player walked off the roof in mid-air. Reading the converted level data predicted ignored edge handlers; lock-step confirmed the fall at x 54 via trigger 49. Replay differences went from 436 to 0.</span></li>
+              <li><span>Documentation said Last Ninja 2 wall lines are one-sided. The code tests the crossing from both sides, and the replay's 436 differences were all enemy steps blocked that way. Reading the code found 32 such claims that the code contradicts.</span></li>
+              <li><span>Status: collision, walls, falls, exits, sprites and hazards migrated with 0 differences. Combat, AI, items and boss logic are in progress.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Scenario · ln2_l6_roof_walls.feature</figcaption>
+<pre>Scenario: walking right, the roof edge starts a fall at x 54 (trigger id 49)
+  Given the disk "tools/a3/out/xl/unicart2_xl_start10.crt"
+  When I wait 700 frames
+  And I hold joystick 2 right for 34 frames
+  Then a FALL runs from x 54: fall_on = 1, trig_act = 49, exit lock $FF,
+       and the player is below the roof line
+  <span class="c"># returned: trig_act $B0 = $31, fall_on = 01, fall_x/y = $36/$5D (54,93)</span>
+  And I wait 60 frames
+  Then the fall has ended in the death flow
+  <span class="c"># returned: fall_on = 02, fall_y = $75 (117 = 61 + 7 x 8), dead = 01</span></pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>Reference · original game under lock-step</figcaption>
+<pre><span class="c"># The original's reference (lock-step):</span>
+lands at (26,61)
+right edge: trigger 49 at x 54
+left edge:  trigger 50 at x 18
+
+<span class="c"># Unified engine: identical.</span></pre>
+          </figure>
+        </div>
+        <p class="code-note">Scenario steps run verbatim in the sandbox; the returned values are recorded under each step.</p>
+      </section>
+
+      <section class="case shell" id="graph" aria-labelledby="graph-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">04 · A code graph for 6502 assembler</p>
+            <h2 id="graph-title">Every read, write and call in Neuromancer, queryable.</h2>
+            <p class="case-project">Neuromancer · Interplay, 1988 · engine, overlays and 1541 drive code</p>
+            <p class="case-summary">
+              C64RE imports the deterministic analysis into a typed graph: 3,079 nodes and 11,889 edges from
+              static analysis, plus a separate human layer of 1,634 annotated nodes that re-analysis never
+              overwrites. Queries answer what a flat listing cannot: who writes a byte, what a routine takes and
+              returns, and what breaks when it changes.
+            </p>
+          </div>
+          <figure class="case-figure">
+            <img src="assets/examples/neuromancer-graph-overview.png" alt="C64RE workbench graph tab: force layout of the whole Neuromancer graph with entry points, banking sites and hardware registers" width="1600" height="848" loading="lazy" />
+            <figcaption>Workbench graph tab: the whole project, with entry points, banking sites and hardware registers</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the graph answers</h3>
+            <ul class="feature-list">
+              <li><span>$7403 has exactly two writers: engine initialisation and the overlay itself. The readers are the demand-load test for the $7400 overlay slot, spread over two payloads.</span></li>
+              <li><span>Engine API routine $5292 draws a string from 32 call sites. The computed signature flags that it reads its own return address — proof that the string pointer is an inline word after each JSR, which a linear disassembly decodes as garbage.</span></li>
+              <li><span>Argument domains across call sites: the disk loader at $4BEC takes its sector from the tables at $FE3C and $6300, the ones the load-table documentation describes.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Impact before an edit</h3>
+            <ul class="feature-list">
+              <li><span>Changing the two-instruction banking helper $4B9F breaks 6 direct callers. Through its write to $01 it also reaches the raster IRQ and the fastloader in another file — no call edge connects them.</span></li>
+              <li><span>UNKNOWN is a separate result, never counted as low risk: indirect accesses, code on the 1541's own 6502, self-modifying writes.</span></li>
+              <li><span>For the EasyFlash port, "identified" is defined as graph predicates: byte coverage, a signature per routine, every indirect access resolved or declared.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="graph-gallery">
+          <figure class="case-figure">
+            <img src="assets/examples/neuromancer-graph-7403.png" alt="Graph focused on address $7403 with its two writers and five readers" width="1600" height="848" loading="lazy" />
+            <figcaption>$7403: two writers, five readers</figcaption>
+          </figure>
+          <figure class="case-figure">
+            <img src="assets/examples/neuromancer-graph-4b9f.png" alt="Radial view of bank_out_io at $4B9F with its callers, the $00/$01 port and the computed signature" width="1600" height="848" loading="lazy" />
+            <figcaption>$4B9F bank_out_io: callers, $01 and its computed signature</figcaption>
+          </figure>
+          <figure class="case-figure">
+            <img src="assets/examples/neuromancer-graph-5292.png" alt="Radial view of draw_string_inline at $5292 with its call sites and the signature and argument card" width="1600" height="848" loading="lazy" />
+            <figcaption>$5292 draw_string_inline: call sites, signature and argument domains</figcaption>
+          </figure>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Query · signature of $5292</figcaption>
+<pre><span class="c">$ c64re graph signature '$5292'</span>
+in:        A X Y zp:$54 zp:$77+X zp:$7B+X ...
+clobbers:  A X Y C Z N V zp:$4C zp:$4D
+           + 20 self-modified operands
+stack:     balanced [<span class="l">reads-return-address</span>]
+
+<span class="c">; caller side</span>
+      jsr  draw_string_inline
+      .byte $CE, $4C            <span class="c">; -&gt; 'I/O Error.'</span></pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>change_impact · $4B9F bank_out_io</figcaption>
+<pre>depth 1  will break (6)
+         copy_block_under_io, load_room_scene, ...
+depth 2  likely affected (14)
+         <span class="l">sector_transfer</span>   reads $0001  <span class="c">(fastloader)</span>
+         <span class="l">raster_irq_entry</span>  reads $0001
+depth 3  may need testing (11)
+UNKNOWN  (35)
+         copy_block_under_io -&gt; lda ($42),y
+         <span class="c">the graph holds the pointer, not the cell</span></pre>
+          </figure>
+        </div>
+        <p class="code-note">Query output from the Neuromancer project graph, trimmed. Neuromancer © 1988 Interplay.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner shell">
+        <div>
+          <p class="footer-brand">TREX64 / C64 reverse-engineering and development tools</p>
+          <p class="footer-note">TRX64, C64RE, and the C64U / UE2 Emulator are independent projects licensed under GPL-3.0-or-later. ROMs, firmware, and third-party media are not included and retain their respective licenses. Game screenshots and code excerpts are shown for illustration; the games remain the property of their copyright holders.</p>
+        </div>
+        <nav class="footer-links" aria-label="Project links">
+          <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">TRX64</a>
+          <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">C64RE</a>
+          <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">C64U / UE2</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

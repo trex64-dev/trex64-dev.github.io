@@ -15,17 +15,18 @@ This repo contains no C64 media and is not a C64RE project — it only describes
 ## Layout and build
 
 - No build step, no package manager, no tests, no JavaScript. `dist/` is the deployed site as-is.
-- `dist/index.html` is the whole site: one file with all CSS inline in `<style>`. Edit it directly.
+- Two pages: `dist/index.html` (overview) and `dist/examples.html` (project showcase). Both share one stylesheet, `dist/assets/site.css`; each page carries its own header/nav and footer markup — keep them in sync.
 - `dist/assets/` — screenshots (`*.png`) and the self-hosted `Sixtyfour` display font (OFL license alongside; keep it).
 - Deployment: GitHub Pages, repo `trex64-dev/trex64-dev.github.io` → https://trex64-dev.github.io. `.github/workflows/pages.yml` publishes `dist/` on every push to `main`.
 - `.openai/hosting.json` — earlier Codex/ChatGPT preview hosting of `dist/`. Don't change `project_id`.
 - Preview locally: `python3 -m http.server -d dist 8000`.
 
-## Page structure (dist/index.html)
+## Page structure
 
 - Design tokens on `:root` (`--bg`, `--surface*`, `--ink`, `--muted`, `--line`, accent `--violet`/`--cyan`/`--coral`/`--amber`, fonts `--sans`/`--mono`/`--display`). Dark-only (`color-scheme: dark`). Reuse tokens; don't hardcode new colors.
 - Responsive breakpoints at `max-width: 920px` and `640px`; `prefers-reduced-motion` handled.
-- Sections, in order, anchored by id: hero + `#ecosystem` system map → `#api-first` → `#tools` (per-product cards + C64RE graph spec) → `#workflow` (5 project stages, 7 per-artifact analysis phases) → `#install` → footer.
+- `index.html` sections, in order, anchored by id: hero + `#ecosystem` system map → `#api-first` → `#tools` (per-product cards + C64RE graph spec) → `#workflow` (5 project stages, 7 per-artifact analysis phases) → `#install` → footer.
+- `examples.html`: one `.case` section per capability hook, each backed by one project (`#engine` Wasteland, `#easyflash` Accolade Comics, `#bdt` Last Ninja engine, `#graph` Neuromancer). Screenshots in `dist/assets/examples/`. Figures and code excerpts are verified against the project files, not taken from session reports.
 - Each product has a consistent color/class suffix (`-trx`, `-c64re`, `-ue2`) reused across module, api-surface, and product blocks.
 - Section headings use numbered `section-index` labels (`01 / …`, `02 / …`); keep numbering in sync when adding/removing sections.
 
