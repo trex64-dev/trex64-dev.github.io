@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="TRX64 FPGA Platform: MultiCore, TRX64 Ultimate, and the C64U / UE2 Emulator for Ultimate hardware and software development." />
+    <meta name="theme-color" content="#070a12" />
+    <title>TRX64 — FPGA Platform</title>
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body class="domain-page domain-page-fpga">
+    <header class="site-header site-header-v2">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="TRX64 home"><span class="brand-name">TRX64</span></a>
+        <div class="nav-links">
+          <a href="reverse-engineering.html">Reverse Engineering</a>
+          <a href="fpga-platform.html" aria-current="page">FPGA Platform</a>
+          <a href="examples.html">Projects</a>
+          <a href="documentation.html">Documentation</a>
+          <a class="nav-github" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="domain-hero shell" aria-labelledby="page-title">
+        <div class="domain-hero-copy">
+          <p class="domain-breadcrumb"><a href="index.html">TRX64</a> / Runtime + hardware platform</p>
+          <h1 id="page-title">Run projects on Ultimate hardware.</h1>
+          <p class="domain-deck">TRX64 Ultimate is the native C64 runtime. MultiCore loads it without reflashing the board.</p>
+          <p class="domain-detail">MultiCore owns boot and board services. UE2 models the same Ultimate-specific target in software.</p>
+          <div class="actions"><a class="button" href="#architecture">Architecture</a><a class="button button-secondary" href="#status">Status →</a></div>
+        </div>
+
+        <div class="domain-schematic domain-schematic-fpga" aria-label="FPGA platform component flow">
+          <div class="schematic-stage schematic-primary"><span>01 / Host</span><strong>TRX64 MultiCore</strong><small>Boot · board services · core loading</small></div>
+          <div class="schematic-paths"><span>Partial .cor<br /><small>ICAP</small></span><span>Large .cor<br /><small>IPROG</small></span><span>Firmware .cfw<br /><small>IPROG</small></span></div>
+          <div class="schematic-stage"><span>02 / Native C64</span><strong>TRX64 Ultimate</strong><small>C64 runtime on physical hardware</small></div>
+          <div class="schematic-stage"><span>03 / Software target</span><strong>UE2 Emulator</strong><small>Ultimate development and CI</small></div>
+        </div>
+      </section>
+
+      <section class="development-preview" id="status" aria-labelledby="status-title">
+        <div class="shell development-preview-grid">
+          <p class="section-index">Development status</p>
+          <div class="development-preview-copy">
+            <p class="status-flag">Private repositories</p>
+            <h2 id="status-title">Private development.</h2>
+            <p>The architecture is public. Source, builds, and interface specifications are not.</p>
+          </div>
+          <dl class="status-scope">
+            <div><dt>Public now</dt><dd>Architecture, component boundaries, execution paths, and machine families.</dd></div>
+            <div><dt>Not public</dt><dd>Source, binaries, interface specifications, and build instructions.</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="page-band" aria-labelledby="contract-title">
+        <div class="shell statement-grid">
+          <p class="section-index">Platform boundary</p>
+          <div><h2 id="contract-title">The platform separates host, core, and application.</h2><p>Partial cores keep the installed host. Large cores carry a host copy. External firmware replaces MultiCore until power-off.</p></div>
+          <div class="constraint-list"><p><span>Cold start</span>A core change resets the machine. The application loads ROMs, media, and settings before release.</p><p><span>Contract</span>Only partial cores use the versioned host/core contract.</p></div>
+        </div>
+      </section>
+
+      <section class="section shell" id="architecture" aria-labelledby="architecture-title">
+        <div class="section-heading">
+          <span class="section-index">MultiCore architecture</span>
+          <div><h2 id="architecture-title">The boot menu has three load paths.</h2><p>The package type determines which FPGA layers remain active.</p></div>
+        </div>
+        <div class="platform-topology">
+          <div class="topology-layer topology-host"><p>Layer 1 / installed in flash</p><h3>Host plus null core</h3><div class="topology-items"><span>Boot ROM</span><span>Core loader</span><span>DDR2</span><span>USB / SD / network</span><span>HDMI / audio</span><span>Board I/O</span></div></div>
+          <div class="topology-contract">BOOT MENU SELECTS ONE EXECUTION PATH</div>
+          <div class="execution-paths">
+            <article class="execution-path execution-path-partial"><p class="path-kicker">PARTIAL .COR / ICAP</p><h3>Replace Layer 2</h3><p>The host remains active. The machine starts cold in <code>pb_l2</code>.</p><div class="path-stack"><span>Running host</span><span>Versioned contract</span><span>Partial machine core</span><span>Common core application</span></div></article>
+            <article class="execution-path execution-path-large"><p class="path-kicker">LARGE .COR / IPROG</p><h3>Replace the full FPGA</h3><p>The package contains the machine and its host build.</p><div class="path-stack"><span>Host copy</span><span>Machine core</span><span>Common core application</span></div></article>
+            <article class="execution-path execution-path-firmware"><p class="path-kicker">FULL FIRMWARE .CFW / IPROG</p><h3>Replace MultiCore</h3><p>The firmware runs its own bitstream and application. A power cycle restores the installed host.</p><div class="path-stack"><span>External bitstream</span><span>External application</span></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-band products-band" aria-labelledby="components-title">
+        <div class="shell">
+          <div class="section-heading">
+            <span class="section-index">Platform components</span>
+            <div><h2 id="components-title">The deployment path has three parts.</h2><p>Host, native C64 runtime, and software target.</p></div>
+          </div>
+          <div class="platform-products platform-products-v2">
+            <article class="platform-product platform-product-multicore">
+              <figure class="platform-product-logo"><img src="assets/trx64-multicore.png" alt="TRX64 MultiCore" width="960" height="540" loading="lazy" /></figure>
+              <p class="product-number">Host and core platform</p><h3 class="visually-hidden">TRX64 MultiCore</h3>
+              <p>The installed host owns board services and loads partial cores, large cores, or external firmware.</p>
+              <ul class="feature-list"><li><span>One <code>.cor</code> package format for partial and large cores</span></li><li><span>Common core application for MultiCore machines</span></li><li><span>Shared operation registry for menus and remote control</span></li></ul>
+              <p class="availability-note"><span>Private development</span>Source and interface documentation are not public.</p>
+            </article>
+
+            <article class="platform-product platform-product-ultimate">
+              <figure class="platform-product-logo"><img src="assets/trx64-ultimate.png" alt="TRX64 Ultimate" width="960" height="540" loading="lazy" /></figure>
+              <p class="product-number">Native C64 runtime</p><h3 class="visually-hidden">TRX64 Ultimate</h3>
+              <p>The native C64 runtime for C64 Ultimate and Ultimate 64 Elite II hardware.</p>
+              <ul class="feature-list"><li><span>Runs on Ultimate hardware</span></li><li><span>Direct machine-state access and monitor functions</span></li><li><span>Cartridges, turbo operation, and time-oriented debugging</span></li></ul>
+              <p class="availability-note"><span>Private development</span>Source, builds, and hardware documentation are not public.</p>
+            </article>
+
+            <article class="platform-product platform-product-emulator">
+              <figure class="platform-product-image"><img src="assets/ue2-browser.png" alt="Ultimate file browser running in the C64U and UE2 Emulator" width="640" height="450" loading="lazy" /></figure>
+              <p class="product-number">Ultimate software target</p><h3>C64U / UE2 Emulator</h3>
+              <p>UE2 runs unmodified Ultimate firmware on modeled board hardware. It is a software target for Made for Ultimate development.</p>
+              <ul class="feature-list"><li><span>UCI and C64U-specific interfaces for Made for Ultimate development</span></li><li><span>Turbo modes up to 64 MHz, REU, Ultimate Audio, storage, networking, and REST services</span></li><li><span>Interactive, headless, MCP, scripted, and CI operation</span></li></ul>
+              <div class="text-links"><a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">Repository and documentation ↗</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell" aria-labelledby="families-title">
+        <div class="core-catalog core-catalog-v2">
+          <div><p class="graph-spec-label">Example cores / unsupported</p><h3 id="families-title">Only TRX64 Ultimate is supported.</h3><p>The other cores test the loader or demonstrate the board. They are not TRX64 products.</p></div>
+          <div class="core-family-grid">
+            <article><p>COMMODORE</p><div class="core-tags"><span>TRX64 C64</span><span>VIC-20</span><span>PET</span><span>C16 / Plus/4</span><span>C128</span><span>C64 + SuperCPU</span></div></article>
+            <article><p>COMPUTERS</p><div class="core-tags"><span>Amiga 500</span><span>Amiga 1200</span><span>Atari 800 XL</span><span>Apple IIe</span><span>Amstrad CPC</span><span>ZX Spectrum</span><span>ZX Spectrum Next</span></div></article>
+            <article><p>CONSOLES AND SYSTEMS</p><div class="core-tags"><span>NES</span><span>SNES</span><span>Neo Geo</span><span>DDT demos</span><span>Port Diagnostics</span></div></article>
+          </div>
+          <p class="availability-note"><span>Not public</span>The core matrix will ship with the first development release.</p>
+        </div>
+      </section>
+
+      <nav class="next-domain shell" aria-label="Related section"><span>Back to project analysis</span><a href="reverse-engineering.html">Reverse Engineering →</a></nav>
+    </main>
+
+    <footer class="site-footer site-footer-v2">
+      <div class="footer-inner shell">
+        <div><p class="footer-brand">TRX64</p><p class="footer-note">C64 engineering environment.</p></div>
+        <div class="footer-links"><a href="index.html">System</a><a href="reverse-engineering.html">Reverse Engineering</a><a href="examples.html">Projects</a><a href="documentation.html">Documentation</a></div>
+        <p class="footer-note">Independent projects. Commodore and Ultimate trademarks belong to their respective owners.</p>
+      </div>
+    </footer>
+  </body>
+</html>

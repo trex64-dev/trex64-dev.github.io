@@ -8,7 +8,7 @@
       content="C64 projects built with C64RE and TRX64: full engine reverse engineering, EasyFlash conversion, behaviour-driven testing, and a 6502 code graph."
     />
     <meta name="theme-color" content="#070a12" />
-    <title>TREX64 — Examples</title>
+    <title>TRX64 — Projects</title>
     <link
       rel="icon"
       type="image/svg+xml"
@@ -16,18 +16,15 @@
     />
     <link rel="stylesheet" href="assets/site.css" />
   </head>
-  <body>
-    <header class="site-header">
+  <body class="domain-page projects-page">
+    <header class="site-header site-header-v2">
       <nav class="nav shell" aria-label="Primary navigation">
-        <a class="brand" href="index.html" aria-label="TREX64 home">
-          <span class="brand-name">TREX64 <span>/ C64 analysis and emulation tools</span></span>
-        </a>
+        <a class="brand" href="index.html" aria-label="TRX64 home"><span class="brand-name">TRX64</span></a>
         <div class="nav-links">
-          <a href="index.html#api-first">Interfaces</a>
-          <a href="index.html#tools">Components</a>
-          <a href="index.html#workflow">Workflow</a>
-          <a href="index.html#install">Install</a>
-          <a href="examples.html" aria-current="page">Examples</a>
+          <a href="reverse-engineering.html">Reverse Engineering</a>
+          <a href="fpga-platform.html">FPGA Platform</a>
+          <a href="examples.html" aria-current="page">Projects</a>
+          <a href="documentation.html">Documentation</a>
           <a class="nav-github" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </nav>
@@ -35,12 +32,9 @@
 
     <main id="top">
       <section class="examples-hero shell" aria-labelledby="examples-title">
-        <span class="section-index">05 / Examples</span>
-        <h1 id="examples-title">Real C64 projects built with C64RE and TRX64.</h1>
-        <p>
-          Each example is one project and one capability. Code excerpts are short illustrations from commercial
-          games; the games and their code remain the property of their copyright holders.
-        </p>
+        <span class="section-index">TRX64 / Projects</span>
+        <h1 id="examples-title">Projects and evidence.</h1>
+        <p>Work produced with C64RE and TRX64. Commercial game material remains the property of its copyright holders.</p>
         <ul class="hook-index">
           <li><a href="#engine"><span>Wasteland</span>Full engine reverse engineering</a></li>
           <li><a href="#easyflash"><span>Accolade Comics</span>Disk-to-EasyFlash conversion</a></li>
@@ -53,12 +47,11 @@
         <div class="case-head">
           <div>
             <p class="case-kicker">01 · Full engine reverse engineering</p>
-            <h2 id="engine-title">The complete Wasteland engine, readable and editable.</h2>
+            <h2 id="engine-title">Wasteland engine reverse engineering</h2>
             <p class="case-project">Wasteland · Interplay, 1988 · 4 disk sides</p>
             <p class="case-summary">
-              The engine is disassembled and annotated end to end. Its data model — area records, scene scripts,
-              foe records, the 5-bit text codec — is decoded. The game runs from one EasyFlash cartridge with a
-              persistent world, and a web editor reads and writes the original record format.
+              The project covers the full engine and its data formats. It includes an EasyFlash port with persistent
+              state and an editor for the original record format.
             </p>
           </div>
           <figure class="case-figure">
@@ -77,7 +70,7 @@
             </ul>
           </div>
           <div>
-            <h3>Understanding from context</h3>
+            <h3>Findings</h3>
             <ul class="feature-list">
               <li><span>Portraits carry no colour data of their own. This follows from the renderer, the fixed window colour setup and the foe records, whose byte 7 selects the portrait. Result: all 88 portraits export with their names.</span></li>
               <li><span>Text ids, items and paragraph triggers connect through the scene scripts. The editor derives a cross-area quest graph from item ids and keywords.</span></li>
@@ -91,12 +84,11 @@
         <div class="case-head">
           <div>
             <p class="case-kicker">02 · Disk-to-EasyFlash conversion</p>
-            <h2 id="easyflash-title">Six disk sides, one cartridge, one replaced routine.</h2>
+            <h2 id="easyflash-title">Accolade Comics EasyFlash port</h2>
             <p class="case-project">Accolade Comics · Accolade, 1987 · released 2026 on <a href="https://csdb.dk/release/?id=261918" target="_blank" rel="noreferrer">CSDb ↗</a></p>
             <p class="case-summary">
-              Six floppy sides with a custom loader and copy protection became one 1 MB EasyFlash image
-              (1,050,688 bytes). The build is reproducible and byte-identical. Semantic annotation made the
-              loader architecture readable, so the port replaces one engine routine and keeps the rest byte-exact.
+              Six disk sides became one 1 MB EasyFlash image. The port replaces the sector-load routine at $1998.
+              The remaining engine stays byte-exact.
             </p>
           </div>
           <figure class="case-figure pixel">
@@ -116,10 +108,8 @@
           <div>
             <h3>Semantic annotation, same bytes</h3>
             <p class="case-summary">
-              The deterministic disassembler produces addresses and generated labels. Semantic annotation adds
-              routine names, contracts and caller references. The contract below is consistent with the code: the
-              routine calls itself for lookup-table pages, calls the allocator, inserts a scene entry and streams
-              sectors through $1998.
+              The disassembler supplies addresses and generated labels. Annotations add routine names, contracts,
+              and callers. The routine below loads lookup pages, allocates memory, inserts a scene entry, and streams sectors through $1998.
             </p>
           </div>
         </div>
@@ -163,12 +153,11 @@
         <div class="case-head">
           <div>
             <p class="case-kicker">03 · Behaviour-driven testing</p>
-            <h2 id="bdt-title">Three Last Ninja games, one engine, zero differences.</h2>
+            <h2 id="bdt-title">Last Ninja engine migration tests</h2>
             <p class="case-project">Last Ninja 1–3 · System 3 · unified engine</p>
             <p class="case-summary">
-              The mechanics of three games are merged into one data-driven engine. Every migration step is gated
-              by tests that run the original game and the new engine on identical input and compare the results.
-              A hypothesis comes from reading the code; the test confirms it.
+              Three games are being merged into one data-driven engine. Tests run the original and replacement code
+              with identical input, then compare the results.
             </p>
             <span class="case-status">Ongoing work</span>
           </div>
@@ -187,7 +176,7 @@
             </ul>
           </div>
           <div>
-            <h3>What it found</h3>
+            <h3>Results</h3>
             <ul class="feature-list">
               <li><span>Last Ninja 2, level 6: the player walked off the roof in mid-air. Reading the converted level data predicted ignored edge handlers; lock-step confirmed the fall at x 54 via trigger 49. Replay differences went from 436 to 0.</span></li>
               <li><span>Documentation said Last Ninja 2 wall lines are one-sided. The code tests the crossing from both sides, and the replay's 436 differences were all enemy steps blocked that way. Reading the code found 32 such claims that the code contradicts.</span></li>
@@ -226,13 +215,11 @@ left edge:  trigger 50 at x 18
         <div class="case-head">
           <div>
             <p class="case-kicker">04 · A code graph for 6502 assembler</p>
-            <h2 id="graph-title">Every read, write and call in Neuromancer, queryable.</h2>
+            <h2 id="graph-title">Neuromancer 6502 code graph</h2>
             <p class="case-project">Neuromancer · Interplay, 1988 · engine, overlays and 1541 drive code</p>
             <p class="case-summary">
-              C64RE imports the deterministic analysis into a typed graph: 3,079 nodes and 11,889 edges from
-              static analysis, plus a separate human layer of 1,634 annotated nodes that re-analysis never
-              overwrites. Queries answer what a flat listing cannot: who writes a byte, what a routine takes and
-              returns, and what breaks when it changes.
+              Static analysis produced 3,079 nodes and 11,889 edges. A separate human layer contains 1,634 annotated
+              nodes. Re-analysis does not overwrite that layer.
             </p>
           </div>
           <figure class="case-figure">
@@ -302,17 +289,14 @@ UNKNOWN  (35)
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer site-footer-v2">
       <div class="footer-inner shell">
         <div>
-          <p class="footer-brand">TREX64 / C64 reverse-engineering and development tools</p>
-          <p class="footer-note">TRX64, C64RE, and the C64U / UE2 Emulator are independent projects licensed under GPL-3.0-or-later. ROMs, firmware, and third-party media are not included and retain their respective licenses. Game screenshots and code excerpts are shown for illustration; the games remain the property of their copyright holders.</p>
+          <p class="footer-brand">TRX64</p>
+          <p class="footer-note">C64 engineering environment.</p>
         </div>
-        <nav class="footer-links" aria-label="Project links">
-          <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">TRX64</a>
-          <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">C64RE</a>
-          <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">C64U / UE2</a>
-        </nav>
+        <nav class="footer-links" aria-label="Site links"><a href="index.html">System</a><a href="reverse-engineering.html">Reverse Engineering</a><a href="fpga-platform.html">FPGA Platform</a><a href="documentation.html">Documentation</a></nav>
+        <p class="footer-note">ROMs, firmware, and third-party media are not included. Game screenshots and code excerpts remain the property of their copyright holders.</p>
       </div>
     </footer>
   </body>

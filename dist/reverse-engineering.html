@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="TRX64 Reverse Engineering: C64RE converts C64 media into verified source, a typed 6502 graph, and evidence-linked knowledge." />
+    <meta name="theme-color" content="#070a12" />
+    <title>TRX64 — Reverse Engineering</title>
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body class="domain-page domain-page-re">
+    <header class="site-header site-header-v2">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="TRX64 home"><span class="brand-name">TRX64</span></a>
+        <div class="nav-links">
+          <a href="reverse-engineering.html" aria-current="page">Reverse Engineering</a>
+          <a href="fpga-platform.html">FPGA Platform</a>
+          <a href="examples.html">Projects</a>
+          <a href="documentation.html">Documentation</a>
+          <a class="nav-github" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="domain-hero shell" aria-labelledby="page-title">
+        <div class="domain-hero-copy">
+          <p class="domain-breadcrumb"><a href="index.html">TRX64</a> / Reverse engineering environment</p>
+          <h1 id="page-title">Recover verified source.</h1>
+          <p class="domain-deck">C64RE turns C64 media into verified source, a typed 6502 graph, and project knowledge.</p>
+          <p class="domain-detail">An LLM client operates C64RE through MCP. Tools own the bytes. TRX64 Runtime supplies execution evidence.</p>
+          <div class="actions"><a class="button" href="#workflow">Workflow</a><a class="button button-secondary" href="examples.html">Projects →</a></div>
+        </div>
+
+        <div class="domain-schematic domain-schematic-re" aria-label="Reverse engineering system flow">
+          <div class="schematic-stage"><span>01 / Artifact</span><strong>C64 media</strong><small>PRG · CRT · D64 · G64</small></div>
+          <div class="schematic-arrow">↓</div>
+          <div class="schematic-stage schematic-primary"><span>02 / Analyze</span><strong>C64RE</strong><small>Deterministic analysis + LLM semantics</small></div>
+          <div class="schematic-split"><span>Typed 6502 graph</span><span>Verified source</span><span>Claims + evidence</span></div>
+          <div class="schematic-feedback"><span>Targeted validation</span><strong>TRX64 Runtime</strong><small>Trace · rewind · inspect · compare</small></div>
+        </div>
+      </section>
+
+      <section class="page-band" aria-labelledby="llm-title">
+        <div class="shell statement-grid">
+          <p class="section-index">LLM/API-first</p>
+          <div>
+            <h2 id="llm-title">C64RE is operated through MCP.</h2>
+            <p>C64RE exposes listings, graph queries, annotations, evidence, and verification. The connected LLM supplies interpretation and semantic work.</p>
+          </div>
+          <div class="constraint-list" aria-label="Responsibility split">
+            <p><span>Tool authority</span>Extraction, disassembly, graph construction, traces, assembly, and byte comparison.</p>
+            <p><span>Agent responsibility</span>Interpretation, semantic naming, contracts, hypotheses, knowledge mining, and evidence selection.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell" aria-labelledby="graph-title">
+        <div class="section-heading">
+          <span class="section-index">System output</span>
+          <div><h2 id="graph-title">Disassembly produces a 6502-specific graph.</h2><p>Nodes hold program objects. Typed edges record control flow, data access, evidence, and unknown paths.</p></div>
+        </div>
+        <div class="feature-visual">
+          <figure><img src="assets/c64re-semantic-disassembly.png" alt="6502 disassembly with semantic labels in C64RE" width="1400" height="784" loading="lazy" /><figcaption>C64RE / semantic disassembly backed by the persistent graph</figcaption></figure>
+          <div class="feature-visual-copy">
+            <article><span>01 / Structure</span><h3>Control flow and data access</h3><p>Edges cover calls, jumps, branches, reads, writes, indirect accesses, pointers, and observed execution.</p></article>
+            <article><span>02 / Contracts</span><h3>Routine interfaces</h3><p>Contracts record inputs, outputs, clobbers, preserved state, stack effects, arguments, and unresolved exits.</p></article>
+            <article><span>03 / Impact</span><h3>Change impact</h3><p><code>change_impact</code> follows callers, shared state, pointer tables, claims, timing evidence, and unknown paths.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-band workflow-band" id="workflow" aria-labelledby="workflow-title">
+        <div class="shell">
+          <div class="section-heading">
+            <span class="section-index">Operating sequence</span>
+            <div><h2 id="workflow-title">C64RE uses five project stages.</h2><p>Artifact analysis runs in seven phases.</p></div>
+          </div>
+          <ol class="workflow-grid">
+            <li class="workflow-step"><span class="step-number">01 / ONBOARD</span><h3>Set the objective</h3><p>Create or resume the project. Select the workflow profile.</p></li>
+            <li class="workflow-step"><span class="step-number">02 / INGEST</span><h3>Register artifacts</h3><p>Import media. Identify programs. Preserve lineage.</p></li>
+            <li class="workflow-step"><span class="step-number">03 / ANALYZE</span><h3>Run analysis</h3><p>Extract, scan, disassemble, build the graph, classify, annotate, and verify.</p></li>
+            <li class="workflow-step"><span class="step-number">04 / VALIDATE</span><h3>Test hypotheses</h3><p>Run targeted traces where static evidence is insufficient.</p></li>
+            <li class="workflow-step"><span class="step-number">05 / DELIVER</span><h3>Deliver results</h3><p>Export source, knowledge, evidence, open questions, and byte comparisons.</p></li>
+          </ol>
+          <div class="pipeline-phase-line" aria-label="Seven analysis phases"><span>1 Extract</span><span>2 Scan</span><span>3 Disassemble + graph</span><span>4 Classify</span><span>5 Annotate</span><span>6 Validate</span><span>7 Rebuild + compare</span></div>
+        </div>
+      </section>
+
+      <section class="section shell" aria-labelledby="components-title">
+        <div class="section-heading">
+          <span class="section-index">Components</span>
+          <div><h2 id="components-title">C64RE analyzes. TRX64 executes.</h2><p>Each component exposes a machine-callable interface.</p></div>
+        </div>
+        <div class="component-pair">
+          <article class="component-card component-card-cyan">
+            <p class="product-number">Analyze / MCP</p><h3>C64RE</h3>
+            <p>Imports media, builds the graph, stores annotations, and verifies rebuilt output.</p>
+            <ul><li>Deterministic structure and artifact lineage</li><li>LLM-supported disassembly and knowledge mining</li><li>Persistent evidence and confidence</li><li>Byte-for-byte rebuild verification</li></ul>
+            <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">Repository and documentation ↗</a>
+          </article>
+          <article class="component-card component-card-violet">
+            <p class="product-number">Execute / JSON-RPC + Rust</p><h3>TRX64 Runtime</h3>
+            <p>Runs reversible C64, 1541, and 1581 models for inspection and automation.</p>
+            <ul><li>Cycle-oriented execution and rewind</li><li>Writer lookup and reverse stepping</li><li>Trace capture and isolated sessions</li><li>CLI, daemon, and embeddable core</li></ul>
+            <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">Repository ↗</a>
+          </article>
+        </div>
+      </section>
+
+      <nav class="next-domain shell" aria-label="Next section"><span>Continue through the system</span><a href="fpga-platform.html">Runtime + hardware →</a></nav>
+    </main>
+
+    <footer class="site-footer site-footer-v2">
+      <div class="footer-inner shell">
+        <div><p class="footer-brand">TRX64</p><p class="footer-note">C64 engineering environment.</p></div>
+        <div class="footer-links"><a href="index.html">System</a><a href="fpga-platform.html">FPGA Platform</a><a href="examples.html">Projects</a><a href="documentation.html">Documentation</a></div>
+        <p class="footer-note">Independent projects. Commodore and Ultimate trademarks belong to their respective owners.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -3,397 +3,167 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="TREX64 combines the TRX64 reversible runtime, the C64RE MCP workbench, and the C64U / UE2 Emulator, an Ultimate target environment for firmware and Made for Ultimate software, for LLM-assisted C64 reverse engineering and development."
-    />
+    <meta name="description" content="TRX64 is an API-first C64 engineering environment for reverse engineering, software testing, hardware validation, and FPGA development." />
     <meta name="theme-color" content="#070a12" />
-    <title>TREX64 — C64 Reverse Engineering &amp; Development</title>
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070a12'/%3E%3Cpath d='M12 14h40v9H37v27H27V23H12z' fill='%237b6cff'/%3E%3Cpath d='M41 32h11v18H41z' fill='%236de7ff'/%3E%3C/svg%3E"
-    />
+    <title>TRX64 — C64 Engineering Environment</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070a12'/%3E%3Cpath d='M12 14h40v9H37v27H27V23H12z' fill='%237b6cff'/%3E%3Cpath d='M41 32h11v18H41z' fill='%236de7ff'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="assets/site.css" />
   </head>
-  <body>
-    <header class="site-header">
+  <body class="home-v3">
+    <header class="site-header site-header-v2">
       <nav class="nav shell" aria-label="Primary navigation">
-        <a class="brand" href="#top" aria-label="TREX64 home">
-          <span class="brand-name">TREX64 <span>/ C64 analysis and emulation tools</span></span>
-        </a>
+        <a class="brand" href="index.html" aria-label="TRX64 home"><span class="brand-name">TRX64</span></a>
         <div class="nav-links">
-          <a href="#api-first">Interfaces</a>
-          <a href="#tools">Components</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#install">Install</a>
-          <a href="examples.html">Examples</a>
+          <a href="reverse-engineering.html">Reverse Engineering</a>
+          <a href="fpga-platform.html">FPGA Platform</a>
+          <a href="examples.html">Projects</a>
+          <a href="documentation.html">Documentation</a>
           <a class="nav-github" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero shell" aria-labelledby="hero-title">
-        <div>
-          <p class="eyebrow">Programmatic C64 analysis and system emulation</p>
-          <h1 id="hero-title">Analyze C64 software.<span class="cycle">Inspect cycle-level behavior.</span></h1>
-          <p class="lede">
-            TREX64 combines three tools. TRX64 provides cycle-accurate C64, 1541, and 1581 emulation with rewind
-            and JSON-RPC control. C64RE imports deterministic analysis into a persistent typed 6502 graph, provides
-            pre-edit impact queries, and verifies rebuilt output byte for byte. External LLM agents query the graph
-            through MCP and add semantic annotations and evidence. The C64U / UE2 Emulator provides the Ultimate target
-            environment for firmware validation and Made for Ultimate software development: unmodified firmware, UCI,
-            turbo modes up to 64 MHz, Ultimate Audio, and modeled board hardware backed by TRX64.
-          </p>
-          <div class="actions">
-            <a class="button" href="#ecosystem">View system components</a>
-            <a class="button button-secondary" href="https://github.com/trex64-dev" target="_blank" rel="noreferrer">Source repositories ↗</a>
-          </div>
+    <main>
+      <section class="ecosystem-hero shell" aria-labelledby="home-title">
+        <div class="ecosystem-hero-copy">
+          <p class="eyebrow">TRX64 / C64 engineering environment</p>
+          <h1 id="home-title">Analyze, modify, test, and run C64 software.</h1>
         </div>
-
-        <div class="system-map" id="ecosystem" aria-label="TREX64 ecosystem architecture">
-          <div class="address-rail" aria-hidden="true">
-            <span>$FFFF</span><span>$D000</span><span>$A000</span><span>$0000</span>
-          </div>
-          <div class="map-grid">
-            <article class="module module-c64re">
-              <p class="module-kicker">Semantic analysis / C64RE</p>
-              <h2>Build an evidence-linked 6502 analysis graph.</h2>
-              <p>C64RE imports deterministic reports to build typed control-flow and memory-access relations and infer routine contracts. Agents add semantic annotations; reassembly verifies output byte for byte.</p>
-            </article>
-            <article class="module module-ue2">
-              <p class="module-kicker">System / C64U / UE2 Emulator</p>
-              <h2>Develop and test for the Ultimate platform.</h2>
-              <p>UE2 runs unmodified firmware and C64 software that uses UCI, turbo modes, REU, Ultimate Audio, and other C64U-specific interfaces. MCP, scripts, REST, and CI provide control.</p>
-            </article>
-            <article class="module module-trx">
-              <p class="module-kicker">Emulation runtime / TRX64</p>
-              <h2>Run and inspect a reversible C64.</h2>
-              <p>TRX64 emulates the C64, 1541, and 1581 with cycle-accurate execution, rewind, headless operation, and JSON-RPC control.</p>
-              <div class="module-meta" aria-label="TRX64 capabilities">
-                <span>6510 · VIC-II · SID</span>
-                <span>Rewind</span>
-                <span>JSON-RPC</span>
-                <span>Shared sessions</span>
-              </div>
-            </article>
-          </div>
-        </div>
-
-      </section>
-
-      <section class="api-first-section" id="api-first" aria-labelledby="api-first-title">
-        <div class="api-first-inner shell">
-          <div class="api-first-copy">
-            <p class="section-index">01 / Interfaces</p>
-            <h2 id="api-first-title">Each component exposes its primary functions through a machine-callable interface.</h2>
-            <p>
-              C64RE uses MCP and calls the TRX64 daemon for runtime evidence. TRX64 exposes JSON-RPC and an embeddable
-              Rust core. The C64U / UE2 Emulator embeds that core and adds MCP, REST, scripts, and headless control.
-            </p>
-          </div>
-          <div class="api-surface-grid" aria-label="API-first surfaces across TREX64">
-            <article class="api-surface api-surface-c64re">
-              <span class="api-surface-label">C64RE / MCP</span>
-              <h3>An external LLM drives the C64RE workflow through MCP.</h3>
-              <p>The agent instructs C64RE to extract media and run deterministic analyzers, queries the resulting typed 6502 graph, reads complete listings, writes semantic annotations, and records evidence.</p>
-            </article>
-            <article class="api-surface api-surface-trx">
-              <span class="api-surface-label">TRX64 / JSON-RPC + Rust core</span>
-              <h3>Daemon and embedded clients use one runtime implementation.</h3>
-              <p>The CLI, C64RE, scripts, and agents control a reversible session through JSON-RPC. The C64U / UE2 Emulator links the Rust core directly.</p>
-            </article>
-            <article class="api-surface api-surface-ue2">
-              <span class="api-surface-label">C64U / UE2 / MCP + control</span>
-              <h3>Agents test firmware and Made for Ultimate software locally or in CI.</h3>
-              <p>Automation boots firmware, loads C64 software, sends UI and C64 input, inspects video and UART state, calls REST services, asserts results, and shuts down the instance.</p>
-            </article>
-          </div>
+        <div class="ecosystem-hero-detail">
+          <p>C64RE analyzes the program. TRX64 Runtime tests it in software. TRX64 Ultimate runs it on C64U hardware. MultiCore removes the flash cycle.</p>
+          <div class="actions"><a class="button" href="#ecosystem">System map</a><a class="button button-secondary" href="examples.html">Projects →</a></div>
         </div>
       </section>
 
-      <section class="section shell" id="tools" aria-labelledby="tools-title">
-        <div class="section-heading">
-          <span class="section-index">02 / Components</span>
-          <div>
-            <h2 id="tools-title">TRX64 runs the C64; C64RE records analysis and evidence; the C64U / UE2 Emulator provides the Ultimate target environment.</h2>
-            <p>
-              TRX64 does not own the reverse-engineering analysis pipeline. C64RE contains no emulator and uses the
-              TRX64 daemon when static evidence requires runtime validation.
-            </p>
-          </div>
-        </div>
-
-        <div class="products">
-          <article class="product product-trx">
-            <figure class="product-media">
-              <img src="assets/trx64-cockpit.png" alt="TRX64 showing C64 output beside its terminal cockpit" width="1600" height="718" loading="lazy" />
-              <figcaption class="media-tag">C64 display and TRX64 CLI cockpit</figcaption>
-            </figure>
-            <div class="product-copy">
-              <p class="product-number">01 · Runtime / TRX64</p>
-              <h3>Run, inspect, and rewind a cycle-accurate C64.</h3>
-              <p class="product-summary">
-                TRX64 is a Rust runtime for the C64, 1541, and 1581. The CLI, JSON-RPC daemon, and embeddable
-                library use one command-dispatch path.
-              </p>
-              <ul class="feature-list">
-                <li><span>Rewinds execution, reverse-steps, identifies the last writer to an address, and diagnoses JAM states</span></li>
-                <li><span>Runs PAL, NTSC, or PAL-N with disks, cartridges, drives, and expansions</span></li>
-                <li><span>Allows a user, a script, and an LLM agent to share one live session</span></li>
-              </ul>
-              <div class="text-links">
-                <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">Source ↗</a>
-                <a href="https://github.com/Jondalar/TRX64/releases" target="_blank" rel="noreferrer">Releases ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product product-c64re">
-            <figure class="product-media">
-              <img src="assets/c64re-semantic-disassembly.png" alt="6502 disassembly with semantic labels in C64RE" width="1400" height="784" loading="lazy" />
-              <figcaption class="media-tag">Semantically annotated disassembly and verified source</figcaption>
-            </figure>
-            <div class="product-copy">
-              <p class="product-number">02 · Knowledge / C64RE</p>
-              <h3>Generate source and a typed 6502 analysis graph from C64 media.</h3>
-              <p class="product-summary">
-                C64RE is an MCP workbench for media extraction, deterministic disassembly, typed graph construction,
-                semantic annotation, pre-edit impact queries, and byte-for-byte comparison of rebuilt output with the
-                imported artifact. A user defines the objective; an external LLM agent reads complete listings, labels
-                segments and routines, and records evidence.
-              </p>
-              <ul class="feature-list">
-                <li><span>Extracts PRG, CRT, D64, and G64 inputs and runs nine deterministic analyzers in parallel</span></li>
-                <li><span>Builds typed relations from routine and label nodes to address, zero-page, ROM, and hardware-register nodes for calls, jumps, branches, memory accesses, and pointer references</span></li>
-                <li><span>Computes routine contracts: inferred inputs and outputs, clobbers, preserved registers and flags, stack effects, call-site arguments, and unresolved exits</span></li>
-                <li><span>The <code>change_impact</code> query reports incoming control flow, shared-state dependencies, claims affected by the change, inferred state-preservation requirements, and unresolved control-flow paths</span></li>
-                <li><span>External LLM agents classify segments, name routines, explain control flow, and connect artifacts</span></li>
-                <li><span>Stores findings, supporting evidence, artifact lineage, control-flow and memory-access relations, and open questions; re-analysis does not overwrite human assertions</span></li>
-                <li><span>Reassembles with KickAssembler or 64tass and compares output with the imported artifact byte for byte; annotations do not modify output bytes</span></li>
-              </ul>
-              <div class="text-links">
-                <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product product-ue2">
-            <figure class="product-media">
-              <img src="assets/ue2-browser.png" alt="Ultimate file browser running in the C64U / UE2 Emulator" width="640" height="450" loading="lazy" />
-              <figcaption class="media-tag">Ultimate target: firmware, UCI, and C64 software on TRX64</figcaption>
-            </figure>
-            <div class="product-copy">
-              <p class="product-number">03 · Ultimate target / C64U / UE2</p>
-              <h3>Develop firmware and Made for Ultimate software on an emulated target.</h3>
-              <p class="product-summary">
-                C64U / UE2 combines unmodified Ultimate 64 Elite II or C64 Ultimate firmware, modeled board hardware,
-                and the TRX64 core. C64 programs can use UCI, the Ultimate speed registers, REU, Ultimate Audio, and
-                other C64U-specific interfaces. The system runs interactively, headlessly, or under CI.
-              </p>
-              <ul class="feature-list">
-                <li><span>Implements UCI register windows and the unmodified firmware command targets used by Made for Ultimate software</span></li>
-                <li><span>Provides C64U turbo modes up to 64 MHz, REU, GeoRAM, UltiSID, and Ultimate Audio</span></li>
-                <li><span>Models two 1541/1581 drives, Software IEC, 28 cartridge types, and the expansion slot</span></li>
-                <li><span>Implements SD and USB storage, networking, REST services, a web UI, FTP, Telnet, GDB, scripts, and MCP</span></li>
-                <li><span>Lets an agent boot firmware, load C64 software, send input, inspect video and UART state, execute tests, and terminate an isolated system instance</span></li>
-              </ul>
-              <div class="text-links">
-                <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">Source &amp; Docs ↗</a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <section class="graph-spec" aria-labelledby="graph-spec-title">
-          <div class="graph-spec-head">
-            <p class="graph-spec-label">C64RE / Analysis output</p>
-            <div>
-              <h3 id="graph-spec-title">C64RE imports each deterministic analysis report into a persistent typed graph of 6502 code and data.</h3>
-              <p>
-                Deterministic results and human assertions are stored in separate layers in <code>knowledge/graph.sqlite</code>.
-                Applied semantic annotations are stored in the human layer and retained across re-analysis. Trace imports
-                add observed execution and memory-access edges without replacing static evidence. MCP tools resolve nodes,
-                traverse typed edges, find control-flow paths, and execute impact queries against the same graph.
-              </p>
-            </div>
-          </div>
-          <div class="graph-spec-grid">
-            <article class="graph-spec-card">
-              <p class="graph-spec-number">01 / Typed relations</p>
-              <h4>Model control flow, memory access, and machine resources.</h4>
-              <p>The graph stores routine, label, address, zero-page, ROM, and hardware-register nodes. Typed edges represent calls, ROM calls, jumps, branches, reads, writes, indirect accesses, and pointer references. Artifact, cartridge-bank, and drive-CPU identifiers distinguish identical 16-bit addresses. Each edge stores supporting evidence and a confidence value.</p>
-            </article>
-            <article class="graph-spec-card">
-              <p class="graph-spec-number">02 / Routine contracts</p>
-              <h4>Infer routine contracts from 6502 code.</h4>
-              <p>C64RE infers inputs, outputs, clobbers, preserved registers and flags, stack effects, call-site arguments, patched operands, and unresolved exits. Analysis includes known ROM ABIs and recursive call relationships; unresolved callees leave contracts partial.</p>
-            </article>
-            <article class="graph-spec-card">
-              <p class="graph-spec-number">03 / Change impact</p>
-              <h4>Identify affected code and state before changing bytes.</h4>
-              <p><code>change_impact</code> traverses incoming call, jump, and branch edges; identifies readers of written addresses and references through pointer and jump tables; and finds claims that may be invalidated. It reports inferred state-preservation requirements. If trace data is available, the report includes observed raster-line timing, worst observed line occupancy, and remaining margin. Unresolved indirect jumps, self-modifying-code paths, and drive-CPU paths are reported as <code>UNKNOWN</code> rather than low risk.</p>
-            </article>
-          </div>
-          <p class="graph-spec-foot">Graph views: force-directed layout · structural layers · concentric rings centered on a selected node · address axis with one lane per bank</p>
-        </section>
-      </section>
-
-      <section class="section workflow-section" id="workflow" aria-labelledby="workflow-title">
+      <section class="ecosystem-section" id="ecosystem" aria-labelledby="ecosystem-title">
         <div class="shell">
-          <div class="section-heading">
-            <span class="section-index">03 / C64RE workflow</span>
-            <div>
-              <h2 id="workflow-title">Five project stages. Seven per-artifact analysis phases.</h2>
-              <p>
-                The human defines the objective and approves decisions. An LLM agent invokes C64RE through MCP,
-                interprets the resulting evidence, and persists project knowledge. C64RE performs deterministic
-                analysis and byte comparison. TRX64 supplies runtime evidence for hypotheses derived from static analysis.
-              </p>
-            </div>
-          </div>
-          <div class="workflow-grid">
-            <article class="workflow-step">
-              <span class="step-number">01 / ONBOARDING</span>
-              <h3>Initialize the project</h3>
-              <p>Create or resume the project, record the human objective, and select a workflow profile.</p>
-            </article>
-            <article class="workflow-step">
-              <span class="step-number">02 / DISCOVERY</span>
-              <h3>Inventory media and loaders</h3>
-              <p>Extract and register every payload, analyze the loader and packer chain, and map medium locations to load addresses.</p>
-            </article>
-            <article class="workflow-step">
-              <span class="step-number">03 / REVERSE ENGINEERING</span>
-              <h3>Analyze and annotate payloads</h3>
-              <p>Generate deterministic first-pass source and import its analysis report into the typed 6502 graph. Inspect each non-trivial segment, add semantic annotations, connect artifacts, and validate each interpretation against recorded evidence.</p>
-            </article>
-            <article class="workflow-step">
-              <span class="step-number">04 / BUILD</span>
-              <h3>Produce modified artifacts</h3>
-              <p>Run <code>change_impact</code> before changing bytes. Apply patches or implement the target medium, loader, or feature; record the rationale, modified byte ranges, and validation evidence.</p>
-            </article>
-            <article class="workflow-step">
-              <span class="step-number">05 / RELEASE</span>
-              <h3>Test and release</h3>
-              <p>Run local and external tests, record known issues, create release candidates, and package the final artifact with its documentation.</p>
-            </article>
+          <div class="ecosystem-section-head">
+            <p class="section-index">System map</p>
+            <div><h2 id="ecosystem-title">The project stays at the center.</h2><p>Analysis, software execution, and hardware validation use the same project context.</p></div>
           </div>
 
-          <div class="pipeline" aria-labelledby="pipeline-title">
-            <div class="pipeline-heading">
-              <h3 id="pipeline-title">Per-artifact analysis phases</h3>
-              <p>
-                Phases 1–2 run during Discovery. Phases 3–7 run during Reverse Engineering.
-                Each phase has an explicit completion criterion.
-              </p>
+          <div class="ecosystem-visual">
+            <svg class="ecosystem-desktop-map" viewBox="0 -24 1000 824" role="img" aria-labelledby="ecosystem-svg-title ecosystem-svg-desc">
+              <title id="ecosystem-svg-title">TRX64 ecosystem centered on a C64 project</title>
+              <desc id="ecosystem-svg-desc">A C64 project sits at the center. The inner ring contains reverse-engineering tools. The outer ring contains software and hardware runtimes. Unsupported Commodore and non-Commodore example cores sit outside the platform.</desc>
+              <defs>
+                <marker id="ecosystem-arrow" orient="auto" markerUnits="userSpaceOnUse" refX="9" refY="5" markerWidth="10" markerHeight="10">
+                  <path d="M1 1L9 5 1 9" fill="none" stroke="#aeb6cc" stroke-linecap="round" stroke-linejoin="round" />
+                </marker>
+                <path id="ecosystem-re-label-path" d="M315 270 A215 215 0 0 1 685 270" />
+              </defs>
+
+              <circle class="ecosystem-orbit" cx="500" cy="380" r="378" />
+              <circle class="ecosystem-platform-ring" cx="500" cy="380" r="322" />
+              <circle class="ecosystem-re-ring" cx="500" cy="380" r="220" />
+
+              <text class="ecosystem-ring-label" x="35" y="380" transform="rotate(-90 35 380)">UNSUPPORTED EXAMPLE CORES</text>
+              <text class="ecosystem-ring-label" x="500" y="125">RUNTIME + HARDWARE PLATFORM</text>
+              <text class="ecosystem-ring-label"><textPath href="#ecosystem-re-label-path" startOffset="50%" text-anchor="middle">REVERSE ENGINEERING ENVIRONMENT</textPath></text>
+
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M470 350 C430 302 395 285 366 286" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M390 300 C418 258 452 235 487 225" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M532 227 C579 232 611 256 634 290" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M650 318 C696 285 718 236 704 190" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M731 212 C784 278 790 397 726 494" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M676 512 C642 548 574 535 535 428" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M460 405 C412 438 393 462 385 495" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M423 517 C459 507 480 477 486 426" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M270 498 C322 540 370 577 425 626" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M575 633 C638 606 688 565 715 526" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M769 360 C744 345 718 345 693 356" />
+
+              <circle class="ecosystem-project-node" cx="500" cy="380" r="58" />
+              <text class="ecosystem-node-label ecosystem-project-label" x="500" y="372"><tspan x="500">C64</tspan><tspan x="500" dy="20">PROJECT</tspan></text>
+
+              <circle class="ecosystem-tool-node" cx="350" cy="300" r="47" />
+              <text class="ecosystem-node-label" x="350" y="294"><tspan x="350">C64RE</tspan><tspan class="ecosystem-caption" x="350" dy="20">disassemble</tspan></text>
+              <circle class="ecosystem-tool-node" cx="500" cy="215" r="47" />
+              <text class="ecosystem-node-label" x="500" y="209"><tspan x="500">6502 GRAPH</tspan><tspan class="ecosystem-caption" x="500" dy="20">structure</tspan></text>
+              <circle class="ecosystem-tool-node" cx="650" cy="300" r="47" />
+              <text class="ecosystem-node-label" x="650" y="294"><tspan x="650">KNOWLEDGE</tspan><tspan class="ecosystem-caption" x="650" dy="20">semantics</tspan></text>
+              <circle class="ecosystem-tool-node" cx="385" cy="520" r="47" />
+              <text class="ecosystem-node-label" x="385" y="514"><tspan x="385">IMPACT</tspan><tspan class="ecosystem-caption" x="385" dy="20">analysis</tspan></text>
+              <circle class="ecosystem-tool-node" cx="600" cy="510" r="47" />
+              <text class="ecosystem-node-label" x="600" y="504"><tspan x="600">VERIFY</tspan><tspan class="ecosystem-caption" x="600" dy="20">rebuild</tspan></text>
+
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="680" cy="175" r="49" />
+              <text class="ecosystem-node-label" x="680" y="169"><tspan x="680">TRX64</tspan><tspan class="ecosystem-caption" x="680" dy="20">runtime</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="795" cy="360" r="49" />
+              <text class="ecosystem-node-label" x="795" y="354"><tspan x="795">UE2</tspan><tspan class="ecosystem-caption" x="795" dy="20">emulator</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="715" cy="525" r="49" />
+              <text class="ecosystem-node-label" x="715" y="519"><tspan x="715">TRX64</tspan><tspan class="ecosystem-caption" x="715" dy="20">Ultimate</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="500" cy="650" r="49" />
+              <text class="ecosystem-node-label" x="500" y="644"><tspan x="500">MULTICORE</tspan><tspan class="ecosystem-caption" x="500" dy="20">load + switch</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="260" cy="525" r="49" />
+              <text class="ecosystem-node-label" x="260" y="519"><tspan x="260">C64U</tspan><tspan class="ecosystem-caption" x="260" dy="20">hardware</tspan></text>
+
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="165" cy="180" r="38" />
+              <text class="ecosystem-node-label" x="165" y="185">VIC-20</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="292" cy="68" r="38" />
+              <text class="ecosystem-node-label" x="292" y="73">PET</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="432" cy="30" r="38" />
+              <text class="ecosystem-node-label" x="432" y="35">C16/+4</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="575" cy="38" r="38" />
+              <text class="ecosystem-node-label" x="575" y="43">C128</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="710" cy="82" r="38" />
+              <text class="ecosystem-node-label" x="710" y="87">AMIGA</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="835" cy="188" r="38" />
+              <text class="ecosystem-node-label" x="835" y="181"><tspan x="835">C64 +</tspan><tspan x="835" dy="20">SCPU</tspan></text>
+
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="882" cy="342" r="38" />
+              <text class="ecosystem-node-label" x="882" y="347">ATARI</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="850" cy="510" r="38" />
+              <text class="ecosystem-node-label" x="850" y="515">APPLE II</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="745" cy="660" r="38" />
+              <text class="ecosystem-node-label" x="745" y="665">CPC</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="635" cy="720" r="38" />
+              <text class="ecosystem-node-label" x="635" y="725">ZX</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="365" cy="720" r="38" />
+              <text class="ecosystem-node-label" x="365" y="713"><tspan x="365">ZX</tspan><tspan x="365" dy="20">NEXT</tspan></text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="245" cy="660" r="38" />
+              <text class="ecosystem-node-label" x="245" y="665">NES</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="150" cy="520" r="38" />
+              <text class="ecosystem-node-label" x="150" y="525">SNES</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="115" cy="350" r="38" />
+              <text class="ecosystem-node-label" x="115" y="343"><tspan x="115">NEO</tspan><tspan x="115" dy="20">GEO</tspan></text>
+            </svg>
+
+            <div class="ecosystem-mobile-map" aria-label="TRX64 ecosystem layers">
+              <div class="ecosystem-mobile-project">C64 PROJECT</div>
+              <div class="ecosystem-mobile-arrow" aria-hidden="true">↓</div>
+              <section><h3>Reverse engineering environment</h3><p>C64RE · 6502 graph · Knowledge · Impact analysis · Verified rebuild</p></section>
+              <div class="ecosystem-mobile-arrow" aria-hidden="true">↓</div>
+              <section><h3>Runtime + hardware platform</h3><p>TRX64 Runtime · UE2 Emulator · TRX64 Ultimate · MultiCore · C64U hardware</p></section>
+              <div class="ecosystem-mobile-arrow" aria-hidden="true">↓</div>
+              <section><h3>Unsupported example cores</h3><p>VIC-20 · PET · C16/+4 · C128 · Amiga · C64+SCPU · Atari · Apple II · CPC · ZX · ZX Next · NES · SNES · Neo Geo</p></section>
             </div>
 
-            <div class="pipeline-groups">
-              <section class="pipeline-group pipeline-group-discovery" aria-label="Discovery phases">
-                <div class="pipeline-group-label"><span>Discovery</span><span>Phases 1–2</span></div>
-                <div class="pipeline-card-grid">
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">01</span>
-                    <h4>Extraction and Inventory</h4>
-                    <p>Extract payload bytes and register every source and generated artifact. Complete when no visible payload remains unregistered.</p>
-                  </article>
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">02</span>
-                    <h4>Loader / Load Behaviour / Sequence</h4>
-                    <p>Statically disassemble and annotate loader and drive code. Record entry points, load contexts, and the flow to runtime addresses.</p>
-                  </article>
-                </div>
-              </section>
-
-              <section class="pipeline-group pipeline-group-re" aria-label="Reverse Engineering phases">
-                <div class="pipeline-group-label"><span>Reverse Engineering</span><span>Phases 3–7</span></div>
-                <div class="pipeline-card-grid">
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">03</span>
-                    <h4>Heuristic Disassembly</h4>
-                    <p>Run deterministic analysis and import the report into the typed 6502 graph. Generate first-pass source for KickAssembler and 64tass without semantic annotations, then attempt a rebuild.</p>
-                  </article>
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">04</span>
-                    <h4>Segment Analysis</h4>
-                    <p>The LLM agent inspects each non-trivial segment, classifies it from static evidence, or records an open question.</p>
-                  </article>
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">05</span>
-                    <h4>Semantic Analysis V1</h4>
-                    <p>The LLM agent proposes labels, routine explanations, and segment annotations. After application, C64RE stores them in the human graph layer, re-disassembles the artifact, and compares rebuilt output with the imported artifact byte for byte.</p>
-                  </article>
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">06</span>
-                    <h4>Meta Connections</h4>
-                    <p>The LLM agent links entities and records cross-artifact relations and flows. C64RE preserves artifact lineage and refuted hypotheses.</p>
-                  </article>
-                  <article class="pipeline-card">
-                    <span class="pipeline-phase">07</span>
-                    <h4>Semantic V2</h4>
-                    <p>Refine annotations with project-wide context, perform final rebuild verification, render documentation, and complete the artifact checklist.</p>
-                  </article>
-                </div>
-              </section>
-            </div>
-
-            <div class="pipeline-note" aria-label="C64RE workflow principles">
-              <span><strong>Static evidence first.</strong> Read bytes and loader code before requesting runtime evidence.</span>
-              <span><strong>Semantic interpretation.</strong> The LLM records names, explanations, relations, and open questions.</span>
-              <span><strong>Targeted runtime validation.</strong> TRX64 supplies evidence for a stated address-level hypothesis; the agent records whether the evidence confirms or refutes it.</span>
-              <span><strong>Byte verification.</strong> KickAssembler or 64tass rebuilds the source; byte comparison determines equality.</span>
+            <div class="ecosystem-legend" aria-label="Diagram legend">
+              <span><i class="ecosystem-swatch ecosystem-swatch-re" aria-hidden="true"></i>Reverse engineering</span>
+              <span><i class="ecosystem-swatch ecosystem-swatch-platform" aria-hidden="true"></i>Runtime and hardware</span>
+              <span><i class="ecosystem-swatch ecosystem-swatch-commodore" aria-hidden="true"></i>Commodore examples</span>
+              <span><i class="ecosystem-swatch ecosystem-swatch-showcase" aria-hidden="true"></i>Showcase cores</span>
             </div>
           </div>
+
+          <p class="ecosystem-boundary"><strong>Core support:</strong> TRX64 Ultimate is supported. Every other core shown outside the platform is an unsupported example.</p>
         </div>
       </section>
 
-      <section class="section shell start-section" id="install" aria-labelledby="start-title">
-        <div class="section-heading">
-          <span class="section-index">04 / Install and run</span>
-          <div>
-            <h2 id="start-title">Install and run the tools.</h2>
-            <p>C64 ROMs, Ultimate firmware, and third-party media are not distributed with these projects. Supply files from legally obtained copies.</p>
-          </div>
-        </div>
-        <div class="start-grid">
-          <article class="start-card">
-            <p class="product-number">TRX64 / macOS</p>
-            <h3>Install and open TRX64</h3>
-            <p>Homebrew installs <code>trx64cli</code> and <code>trx64-daemon</code>. Place C64 ROMs in <code>~/.trx64/roms</code> or pass <code>--rom-dir</code>.</p>
-            <div class="command"><span class="prompt">$</span> brew install jondalar/tap/trx64<br /><span class="prompt">$</span> trx64cli --window</div>
-            <a href="https://github.com/Jondalar/TRX64#install" target="_blank" rel="noreferrer">All platforms ↗</a>
-          </article>
-          <article class="start-card">
-            <p class="product-number">C64RE / npm · Node 22+</p>
-            <h3>Install C64RE and its runtime</h3>
-            <p><code>npx</code> fetches the MCP server <code>@trex64/c64re</code> on first use. <code>runtime install</code> downloads the pinned TRX64 daemon and verifies its checksum. The MCP client runs <code>npx -y @trex64/c64re</code> with <code>C64RE_PROJECT_DIR</code> set. <code>ui</code> serves the workbench on <code>127.0.0.1:4310</code>.</p>
-            <div class="command"><span class="prompt">$</span> npx -y @trex64/c64re --help<br /><span class="prompt">$</span> npx @trex64/c64re runtime install<br /><span class="prompt">$</span> npx -y @trex64/c64re ui --project &lt;dir&gt;</div>
-            <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP/blob/master/INSTALL.md" target="_blank" rel="noreferrer">Install guide ↗</a>
-          </article>
-          <article class="start-card">
-            <p class="product-number">C64U / UE2 · macOS</p>
-            <h3>Install and configure UE2</h3>
-            <p>Create a flash image from <code>update.ue2</code>, supply the <code>roms</code> directory from a 1541ultimate checkout, and start the firmware.</p>
-            <div class="command"><span class="prompt">$</span> brew install jondalar/ue2emu/ue2emu<br /><span class="prompt">$</span> ue2emu install --update update.ue2 --flash flash.bin --roms 1541ultimate/roms --yes --c64-roms<br /><span class="prompt">$</span> ue2emu run --firmware update.ue2 --flash flash.bin --roms 1541ultimate/roms --net user</div>
-            <a href="https://github.com/Jondalar/UE2-C64U-Emulator#getting-started" target="_blank" rel="noreferrer">Getting started ↗</a>
-          </article>
-        </div>
-      </section>
+      <nav class="destination-rail shell" aria-label="Primary destinations">
+        <a href="reverse-engineering.html"><span>01 / Understand</span><strong>Reverse Engineering →</strong></a>
+        <a href="fpga-platform.html"><span>02 / Run</span><strong>FPGA Platform →</strong></a>
+        <a href="examples.html"><span>03 / Evidence</span><strong>Projects →</strong></a>
+        <a href="documentation.html"><span>04 / Reference</span><strong>Documentation →</strong></a>
+      </nav>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer site-footer-v2">
       <div class="footer-inner shell">
-        <div>
-          <p class="footer-brand">TREX64 / C64 reverse-engineering and development tools</p>
-          <p class="footer-note">TRX64, C64RE, and the C64U / UE2 Emulator are independent projects licensed under GPL-3.0-or-later. ROMs, firmware, and third-party media are not included and retain their respective licenses.</p>
-        </div>
-        <nav class="footer-links" aria-label="Project links">
-          <a href="https://github.com/Jondalar/TRX64" target="_blank" rel="noreferrer">TRX64</a>
-          <a href="https://github.com/Jondalar/C64ReverseEngineeringMCP" target="_blank" rel="noreferrer">C64RE</a>
-          <a href="https://github.com/Jondalar/UE2-C64U-Emulator" target="_blank" rel="noreferrer">C64U / UE2</a>
-        </nav>
+        <div><p class="footer-brand">TRX64</p><p class="footer-note">C64 engineering environment.</p></div>
+        <div class="footer-links"><a href="reverse-engineering.html">Reverse Engineering</a><a href="fpga-platform.html">FPGA Platform</a><a href="examples.html">Projects</a><a href="documentation.html">Documentation</a></div>
+        <p class="footer-note">Independent projects. Commodore and Ultimate trademarks belong to their respective owners.</p>
       </div>
     </footer>
   </body>
