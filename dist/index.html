@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#070a12" />
     <title>TRX64 — C64 Engineering Environment</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070a12'/%3E%3Cpath d='M12 14h40v9H37v27H27V23H12z' fill='%237b6cff'/%3E%3Cpath d='M41 32h11v18H41z' fill='%236de7ff'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="assets/site.css?v=20261115-1" />
+    <link rel="stylesheet" href="assets/site.css?v=20261115-2" />
   </head>
   <body class="home-v3">
     <header class="site-header site-header-v2">
@@ -43,90 +43,93 @@
           </div>
 
           <div class="ecosystem-visual">
-            <svg class="ecosystem-desktop-map" viewBox="0 -24 1000 824" role="img" aria-labelledby="ecosystem-svg-title ecosystem-svg-desc">
+            <svg class="ecosystem-desktop-map" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ecosystem-svg-title ecosystem-svg-desc">
               <title id="ecosystem-svg-title">TRX64 ecosystem centered on a C64 project</title>
               <desc id="ecosystem-svg-desc">A C64 project sits at the center. The inner ring contains reverse-engineering tools. The outer ring contains software and hardware runtimes. Unsupported Commodore and non-Commodore example cores sit outside the platform.</desc>
               <defs>
                 <marker id="ecosystem-arrow" orient="auto" markerUnits="userSpaceOnUse" refX="9" refY="5" markerWidth="10" markerHeight="10">
                   <path d="M1 1L9 5 1 9" fill="none" stroke="#aeb6cc" stroke-linecap="round" stroke-linejoin="round" />
                 </marker>
-                <path id="ecosystem-re-label-path" d="M315 270 A215 215 0 0 1 685 270" />
+                <path id="ecosystem-re-label-path" d="M327 400 A200 200 0 0 1 673 400" />
               </defs>
 
-              <circle class="ecosystem-orbit" cx="500" cy="380" r="378" />
-              <circle class="ecosystem-platform-ring" cx="500" cy="380" r="322" />
-              <circle class="ecosystem-re-ring" cx="500" cy="380" r="220" />
+              <circle class="ecosystem-orbit" cx="500" cy="500" r="430" />
+              <circle class="ecosystem-platform-ring" cx="500" cy="500" r="350" />
+              <circle class="ecosystem-re-ring" cx="500" cy="500" r="215" />
 
-              <text class="ecosystem-ring-label" x="35" y="380" transform="rotate(-90 35 380)">UNSUPPORTED EXAMPLE CORES</text>
-              <text class="ecosystem-ring-label" x="500" y="125">RUNTIME + HARDWARE PLATFORM</text>
+              <text class="ecosystem-ring-label" x="500" y="25">UNSUPPORTED EXAMPLE CORES</text>
+              <text class="ecosystem-ring-label" x="500" y="190">RUNTIME + HARDWARE PLATFORM</text>
               <text class="ecosystem-ring-label"><textPath href="#ecosystem-re-label-path" startOffset="50%" text-anchor="middle">REVERSE ENGINEERING ENVIRONMENT</textPath></text>
 
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M470 350 C430 302 395 285 366 286" />
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M390 300 C418 258 452 235 487 225" />
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M532 227 C579 232 611 256 634 290" />
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M650 318 C696 285 718 236 704 190" />
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M731 212 C784 278 790 397 726 494" />
-              <path class="ecosystem-flow ecosystem-flow-primary" d="M676 512 C642 548 574 535 535 428" />
-              <path class="ecosystem-flow ecosystem-flow-secondary" d="M460 405 C412 438 393 462 385 495" />
-              <path class="ecosystem-flow ecosystem-flow-secondary" d="M423 517 C459 507 480 477 486 426" />
-              <path class="ecosystem-flow ecosystem-flow-secondary" d="M270 498 C322 540 370 577 425 626" />
-              <path class="ecosystem-flow ecosystem-flow-secondary" d="M575 633 C638 606 688 565 715 526" />
-              <path class="ecosystem-flow ecosystem-flow-secondary" d="M769 360 C744 345 718 345 693 356" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M466 453 L440 418" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M458 383 C485 360 515 360 542 383" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M598 424 C616 455 624 480 625 504" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M603 570 C580 592 558 611 535 620" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M465 620 C442 601 420 582 397 570" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M403 532 L445 518" />
 
-              <circle class="ecosystem-project-node" cx="500" cy="380" r="58" />
-              <text class="ecosystem-node-label ecosystem-project-label" x="500" y="372"><tspan x="500">C64</tspan><tspan x="500" dy="20">PROJECT</tspan></text>
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M642 502 C676 447 690 371 661 317" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M680 315 C780 340 835 450 754 544" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M724 597 C665 620 610 635 542 636" />
 
-              <circle class="ecosystem-tool-node" cx="350" cy="300" r="47" />
-              <text class="ecosystem-node-label" x="350" y="294"><tspan x="350">C64RE</tspan><tspan class="ecosystem-caption" x="350" dy="20">disassemble</tspan></text>
-              <circle class="ecosystem-tool-node" cx="500" cy="215" r="47" />
-              <text class="ecosystem-node-label" x="500" y="209"><tspan x="500">6502 GRAPH</tspan><tspan class="ecosystem-caption" x="500" dy="20">structure</tspan></text>
-              <circle class="ecosystem-tool-node" cx="650" cy="300" r="47" />
-              <text class="ecosystem-node-label" x="650" y="294"><tspan x="650">KNOWLEDGE</tspan><tspan class="ecosystem-caption" x="650" dy="20">semantics</tspan></text>
-              <circle class="ecosystem-tool-node" cx="385" cy="520" r="47" />
-              <text class="ecosystem-node-label" x="385" y="514"><tspan x="385">IMPACT</tspan><tspan class="ecosystem-caption" x="385" dy="20">analysis</tspan></text>
-              <circle class="ecosystem-tool-node" cx="600" cy="510" r="47" />
-              <text class="ecosystem-node-label" x="600" y="504"><tspan x="600">VERIFY</tspan><tspan class="ecosystem-caption" x="600" dy="20">rebuild</tspan></text>
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M320 315 C220 350 165 455 246 544" />
+              <path class="ecosystem-flow ecosystem-flow-primary" d="M268 614 C310 710 390 780 464 756" />
+              <path class="ecosystem-flow ecosystem-flow-secondary" d="M500 737 L500 688" />
 
-              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="680" cy="175" r="49" />
-              <text class="ecosystem-node-label" x="680" y="169"><tspan x="680">TRX64</tspan><tspan class="ecosystem-caption" x="680" dy="20">runtime</tspan></text>
-              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="795" cy="360" r="49" />
-              <text class="ecosystem-node-label" x="795" y="354"><tspan x="795">UE2</tspan><tspan class="ecosystem-caption" x="795" dy="20">emulator</tspan></text>
-              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="715" cy="525" r="49" />
-              <text class="ecosystem-node-label" x="715" y="519"><tspan x="715">TRX64</tspan><tspan class="ecosystem-caption" x="715" dy="20">Ultimate</tspan></text>
-              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="500" cy="650" r="49" />
-              <text class="ecosystem-node-label" x="500" y="644"><tspan x="500">MULTICORE</tspan><tspan class="ecosystem-caption" x="500" dy="20">load + switch</tspan></text>
-              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="260" cy="525" r="49" />
-              <text class="ecosystem-node-label" x="260" y="519"><tspan x="260">C64U</tspan><tspan class="ecosystem-caption" x="260" dy="20">hardware</tspan></text>
+              <circle class="ecosystem-project-node" cx="500" cy="500" r="58" />
+              <text class="ecosystem-node-label ecosystem-project-label" x="500" y="492"><tspan x="500">C64</tspan><tspan x="500" dy="20">PROJECT</tspan></text>
 
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="165" cy="180" r="38" />
-              <text class="ecosystem-node-label" x="165" y="185">VIC-20</text>
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="292" cy="68" r="38" />
-              <text class="ecosystem-node-label" x="292" y="73">PET</text>
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="432" cy="30" r="38" />
-              <text class="ecosystem-node-label" x="432" y="35">C16/+4</text>
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="575" cy="38" r="38" />
-              <text class="ecosystem-node-label" x="575" y="43">C128</text>
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="710" cy="82" r="38" />
-              <text class="ecosystem-node-label" x="710" y="87">AMIGA</text>
-              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="835" cy="188" r="38" />
-              <text class="ecosystem-node-label" x="835" y="181"><tspan x="835">C64 +</tspan><tspan x="835" dy="20">SCPU</tspan></text>
+              <circle class="ecosystem-tool-node" cx="414.8" cy="382.7" r="43" />
+              <text class="ecosystem-node-label" x="414.8" y="376.7"><tspan x="414.8">C64RE</tspan><tspan class="ecosystem-caption" x="414.8" dy="20">disassemble</tspan></text>
+              <circle class="ecosystem-tool-node" cx="585.2" cy="382.7" r="43" />
+              <text class="ecosystem-node-label" x="585.2" y="376.7"><tspan x="585.2">6502 GRAPH</tspan><tspan class="ecosystem-caption" x="585.2" dy="20">structure</tspan></text>
+              <circle class="ecosystem-tool-node" cx="637.9" cy="544.8" r="43" />
+              <text class="ecosystem-node-label" x="637.9" y="538.8"><tspan x="637.9">KNOWLEDGE</tspan><tspan class="ecosystem-caption" x="637.9" dy="20">semantics</tspan></text>
+              <circle class="ecosystem-tool-node" cx="500" cy="645" r="43" />
+              <text class="ecosystem-node-label" x="500" y="639"><tspan x="500">VERIFY</tspan><tspan class="ecosystem-caption" x="500" dy="20">rebuild</tspan></text>
+              <circle class="ecosystem-tool-node" cx="362.1" cy="544.8" r="43" />
+              <text class="ecosystem-node-label" x="362.1" y="538.8"><tspan x="362.1">IMPACT</tspan><tspan class="ecosystem-caption" x="362.1" dy="20">analysis</tspan></text>
 
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="882" cy="342" r="38" />
-              <text class="ecosystem-node-label" x="882" y="347">ATARI</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="850" cy="510" r="38" />
-              <text class="ecosystem-node-label" x="850" y="515">APPLE II</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="745" cy="660" r="38" />
-              <text class="ecosystem-node-label" x="745" y="665">CPC</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="635" cy="720" r="38" />
-              <text class="ecosystem-node-label" x="635" y="725">ZX</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="365" cy="720" r="38" />
-              <text class="ecosystem-node-label" x="365" y="713"><tspan x="365">ZX</tspan><tspan x="365" dy="20">NEXT</tspan></text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="245" cy="660" r="38" />
-              <text class="ecosystem-node-label" x="245" y="665">NES</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="150" cy="520" r="38" />
-              <text class="ecosystem-node-label" x="150" y="525">SNES</text>
-              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="115" cy="350" r="38" />
-              <text class="ecosystem-node-label" x="115" y="343"><tspan x="115">NEO</tspan><tspan x="115" dy="20">GEO</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="334.2" cy="271.9" r="45" />
+              <text class="ecosystem-node-label" x="334.2" y="265.9"><tspan x="334.2">C64U</tspan><tspan class="ecosystem-caption" x="334.2" dy="20">hardware</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="665.8" cy="271.9" r="45" />
+              <text class="ecosystem-node-label" x="665.8" y="265.9"><tspan x="665.8">TRX64</tspan><tspan class="ecosystem-caption" x="665.8" dy="20">runtime</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="768.2" cy="587.1" r="45" />
+              <text class="ecosystem-node-label" x="768.2" y="581.1"><tspan x="768.2">UE2</tspan><tspan class="ecosystem-caption" x="768.2" dy="20">emulator</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="500" cy="782" r="45" />
+              <text class="ecosystem-node-label" x="500" y="776"><tspan x="500">TRX64</tspan><tspan class="ecosystem-caption" x="500" dy="20">Ultimate</tspan></text>
+              <circle class="ecosystem-tool-node ecosystem-platform-node" cx="231.8" cy="587.1" r="45" />
+              <text class="ecosystem-node-label" x="231.8" y="581.1"><tspan x="231.8">MULTICORE</tspan><tspan class="ecosystem-caption" x="231.8" dy="20">load + switch</tspan></text>
+
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="113.5" cy="311.5" r="36" />
+              <text class="ecosystem-node-label" x="113.5" y="316.5">VIC-20</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="233.6" cy="162.5" r="36" />
+              <text class="ecosystem-node-label" x="233.6" y="167.5">PET</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="406.4" cy="80.3" r="36" />
+              <text class="ecosystem-node-label" x="406.4" y="85.3">C16/+4</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="597.8" cy="81.3" r="36" />
+              <text class="ecosystem-node-label" x="597.8" y="86.3">C128</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="769.8" cy="165.2" r="36" />
+              <text class="ecosystem-node-label" x="769.8" y="170.2">AMIGA</text>
+              <circle class="ecosystem-core-node ecosystem-core-commodore" cx="888.3" cy="315.4" r="36" />
+              <text class="ecosystem-node-label" x="888.3" y="308.4"><tspan x="888.3">C64 +</tspan><tspan x="888.3" dy="20">SCPU</tspan></text>
+
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="930" cy="502.1" r="36" />
+              <text class="ecosystem-node-label" x="930" y="507.1">ATARI</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="886.5" cy="688.5" r="36" />
+              <text class="ecosystem-node-label" x="886.5" y="693.5">APPLE II</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="766.4" cy="837.5" r="36" />
+              <text class="ecosystem-node-label" x="766.4" y="842.5">CPC</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="593.6" cy="919.7" r="36" />
+              <text class="ecosystem-node-label" x="593.6" y="924.7">ZX</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="402.2" cy="918.7" r="36" />
+              <text class="ecosystem-node-label" x="402.2" y="911.7"><tspan x="402.2">ZX</tspan><tspan x="402.2" dy="20">NEXT</tspan></text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="230.2" cy="834.8" r="36" />
+              <text class="ecosystem-node-label" x="230.2" y="839.8">NES</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="111.7" cy="684.6" r="36" />
+              <text class="ecosystem-node-label" x="111.7" y="689.6">SNES</text>
+              <circle class="ecosystem-core-node ecosystem-core-showcase" cx="70" cy="497.9" r="36" />
+              <text class="ecosystem-node-label" x="70" y="490.9"><tspan x="70">NEO</tspan><tspan x="70" dy="20">GEO</tspan></text>
             </svg>
 
             <div class="ecosystem-mobile-map" aria-label="TRX64 ecosystem layers">
