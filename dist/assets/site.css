@@ -2587,6 +2587,54 @@ h1 .cycle {
 
 .legal-block p:last-child { max-width: 720px; margin: 22px 0 0; color: var(--muted); }
 
+.legal-notice {
+  display: grid;
+  grid-template-columns: 0.34fr minmax(0, 1fr);
+  gap: 40px;
+  padding-top: 70px;
+}
+
+.legal-notice h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+.legal-contact {
+  max-width: 720px;
+  margin: 42px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.legal-contact > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-contact dt {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.legal-contact dd {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--mono);
+}
+
+.legal-notice-copy {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: var(--muted);
+}
+
 @media (max-width: 1040px) {
   .home-hero { grid-template-columns: minmax(0, 1fr); }
   .home-intro { position: static; max-width: 760px; padding-top: 0; }
@@ -2629,7 +2677,8 @@ h1 .cycle {
   .docs-grid article:nth-child(n + 4) { grid-column: auto; }
   .reference-list { grid-template-columns: 1fr; gap: 46px; }
   .reference-list > div { grid-row: auto; }
-  .legal-block { grid-template-columns: 1fr; }
+  .legal-block,
+  .legal-notice { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 520px) {
@@ -2646,6 +2695,7 @@ h1 .cycle {
   .schematic-paths { grid-template-columns: 1fr; }
   .next-domain { align-items: flex-start; flex-direction: column; }
   .reference-list a { grid-template-columns: 1fr; gap: 6px; }
+  .legal-contact > div { grid-template-columns: 1fr; gap: 8px; }
 }
 
 /* Project-centered ecosystem homepage */
