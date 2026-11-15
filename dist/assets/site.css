@@ -1648,7 +1648,6 @@ h1 .cycle {
 .platform-product-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  aspect-ratio: 8 / 5;
   gap: 1px;
   margin: -28px -28px 28px;
   scroll-margin-top: 92px;
@@ -2521,13 +2520,43 @@ h1 .cycle {
   background: #0d1220;
 }
 
+.platform-products-v2 .platform-product > figure {
+  height: 240px;
+  flex: 0 0 240px;
+}
+
+.platform-products-v2 .platform-product-image img {
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
 .platform-products-v2 .platform-product > .availability-note,
 .platform-products-v2 .platform-product > .text-links {
-  margin-top: auto;
+  align-self: stretch;
+  margin-top: 0;
+  border-top: 1px solid var(--line);
 }
 
 .platform-products-v2 .platform-product > .text-links {
-  padding-top: 28px;
+  align-items: flex-start;
+  padding-top: 18px;
+}
+
+@media (min-width: 921px) {
+  .platform-products-v2 .platform-product {
+    display: grid;
+    grid-row: span 6;
+    grid-template-rows: subgrid;
+  }
+
+  .platform-products-v2 .feature-list {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
+
+  .platform-products-v2 .feature-list li {
+    align-content: center;
+  }
 }
 .core-catalog-v2 { margin-top: 0; }
 
