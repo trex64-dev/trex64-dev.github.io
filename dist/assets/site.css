@@ -2493,7 +2493,20 @@ h1 .cycle {
 
 .products-band { background: #080c15; }
 .platform-products-v2 { background: var(--line); }
-.platform-products-v2 .platform-product { background: #0d1220; }
+.platform-products-v2 .platform-product {
+  display: flex;
+  flex-direction: column;
+  background: #0d1220;
+}
+
+.platform-products-v2 .platform-product > .availability-note,
+.platform-products-v2 .platform-product > .text-links {
+  margin-top: auto;
+}
+
+.platform-products-v2 .platform-product > .text-links {
+  padding-top: 28px;
+}
 .core-catalog-v2 { margin-top: 0; }
 
 .platform-product > p.availability-note,
