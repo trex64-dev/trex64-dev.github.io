@@ -2621,6 +2621,19 @@ h1 .cycle {
 .docs-grid span { color: var(--muted); font-size: 0.86rem; }
 .docs-grid a { margin-top: auto; padding-top: 28px; font-family: var(--mono); font-size: 0.73rem; text-underline-offset: 5px; }
 
+.docs-grid .docs-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.docs-grid .docs-links a {
+  margin-top: 0;
+  padding-top: 0;
+}
+
 .docs-grid .docs-status {
   margin-top: auto;
   padding-top: 28px;
@@ -2636,7 +2649,7 @@ h1 .cycle {
   gap: 0 80px;
 }
 
-.reference-list > div { grid-row: 1 / span 4; }
+.reference-list > div { grid-row: 1 / span 5; }
 .reference-list a { display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; }
 .reference-list a:last-child { border-bottom: 1px solid var(--line); }
 .reference-list a span { color: var(--muted); font-family: var(--mono); font-size: 0.67rem; text-transform: uppercase; }
