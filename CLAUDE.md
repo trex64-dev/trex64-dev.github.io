@@ -31,7 +31,7 @@ This repo contains no C64 media and is not a C64RE project — it only describes
 - `reverse-engineering.html` documents C64RE, the LLM/MCP responsibility split, the 6502 graph, the five-stage workflow, and TRX64 Runtime validation.
 - `fpga-platform.html` documents private-development status, the MultiCore loading architecture, TRX64 Ultimate, UE2, and unsupported example cores.
 - `documentation.html` is the component and repository index.
-- `examples.html`: one `.case` section per capability hook, each backed by one project (`#engine` Wasteland, `#easyflash` Accolade Comics, `#bdt` Last Ninja engine, `#graph` Neuromancer). Screenshots in `dist/assets/examples/`. Figures and code excerpts are verified against the project files, not taken from session reports.
+- `examples.html`: one `.case` section per capability hook, each backed by one project (`#engine` Wasteland, `#easyflash` Accolade Comics, `#bdt` Last Ninja engine, `#graph` Neuromancer, `#port` Metagalactic Llamas). Screenshots in `dist/assets/examples/`. Figures and code excerpts are verified against the project files, not taken from session reports.
 - The visual language assigns cyan to analysis/C64RE, violet to runtime/host infrastructure, and coral to FPGA/Ultimate target content.
 - Section headings use numbered `section-index` labels (`01 / …`, `02 / …`); keep numbering in sync when adding/removing sections.
 
