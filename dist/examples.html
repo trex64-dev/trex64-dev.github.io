@@ -41,6 +41,7 @@
           <li><a href="#bdt"><span>Last Ninja engine</span>Behaviour-driven testing</a></li>
           <li><a href="#graph"><span>Neuromancer</span>A code graph for 6502 assembler</a></li>
           <li><a href="#vic20"><span>Cosmic Cruncher</span>VIC-20 cartridge to C64 port</a></li>
+          <li><a href="#c16"><span>The Magician's Curse</span>Commodore 16 to C64 port</a></li>
         </ul>
       </section>
 
@@ -355,6 +356,75 @@ UNKNOWN  (35)
           </figure>
         </div>
         <p class="code-note">Patch from the generated V1 patch list; scenario shortened (one Then line removed, comments added). Cosmic Cruncher © 1982 Commodore.</p>
+      </section>
+
+      <section class="case shell" id="c16" aria-labelledby="c16-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">06 · Commodore 16 to C64 port</p>
+            <h2 id="c16-title">The Magician's Curse C64 port</h2>
+            <p class="case-project">The Magician's Curse · Gremlin Graphics, 1986 · Commodore 16 / Plus/4 · C64 port by TREX, 2026</p>
+            <p class="case-summary">
+              The C16 game was depacked, disassembled and rebuilt byte for byte. The game image runs at its original
+              addresses $0700–$3FFF; a port layer at $4000–$7FFF maps the TED chip to the VIC-II, SID and CIAs.
+            </p>
+          </div>
+          <figure class="case-figure">
+            <img src="assets/examples/magicians-curse-room-tour.png" alt="Contact sheet of the TRX64 room tour: one frame per room of the C64 version with hardware sprites, NTSC" width="1568" height="762" loading="lazy" />
+            <figcaption>TRX64 room tour, C64 version with hardware sprites, NTSC: one frame per room step, 48 rooms</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Annotated 64tass source: 5,466 lines for the game image, 416 for the block the game copies to $0200. The rebuild compares identical to the depacked original.</span></li>
+              <li><span>The port source includes that listing unchanged and overlays its patches. The byte diff against the original shows 66 changed runs in $0700–$3FFF, each listed in a patch register; no run contains a branch target except at its first byte.</span></li>
+              <li><span>Two builds: a faithful version with the C16 character graphics, and a C64 version in which the player, bats and apples are hardware sprites shown over a second playfield screen at $2800.</span></li>
+              <li><span>Two release disks with trainer menus, a high-score file, an in-game manual, a solution and a printable map of all 48 rooms drawn from the game data.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Findings</h3>
+            <ul class="feature-list">
+              <li><span>Most TED writes need no patch: with the KERNAL banked out they land in RAM at $FF00–$FF3F, and the port reads border, colours and sound back from there. Patched: TED reads, interrupt control, and the display and border writes whose timing matters.</span></li>
+              <li><span>The 48-room tour found an NTSC hang in the sprite build: the room-change blank waited for raster line 256+, and on NTSC the status interrupt covered lines 256–262. The wait now counts that interrupt instead.</span></li>
+              <li><span>A web description credited another publisher and called the statue the end of the game. The title screen and inlay name Gremlin Graphics; the code adds a bonus and restarts one skill level higher.</span></li>
+              <li><span>Verification: 15 event checks pass; 48-room tours pass for both builds on PAL and NTSC. Four faster graphics routines return the same memory and registers as the originals in an isolated 6502 sandbox.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Before · irq_install, original C16 listing</figcaption>
+<pre><span class="l">irq_install:</span> <span class="c">; referenced from W1AA4</span>
+      sei
+      lda  #$1F
+      sta  $0314
+      lda  #$10
+      sta  $0315
+      lda  irq_line_tab
+      sta  $FF0B          <span class="c">; TED raster compare</span>
+      lda  #$02
+      sta  $FF0A          <span class="c">; TED IRQ mask</span>
+      sta  $FF09          <span class="c">; TED IRQ flag</span>
+      lda  #$00
+      sta  $02
+      cli
+      rts</pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>After · patch at $100E, same size</figcaption>
+<pre><span class="c">; irq_install: raster compare -> VIC, raster IRQ enable/ack -> VIC</span>
+* = $100E
+      jsr  set_raster_init  <span class="c">; was STA $FF0B</span>
+      lda  #1               <span class="c">; was LDA #$02</span>
+      sta  VIC_IRQ_MASK     <span class="c">; was STA $FF0A</span>
+      sta  VIC_IRQ_FLAG     <span class="c">; was STA $FF09</span>
+.cerror * != $1019, "irq_install patch changed size"</pre>
+          </figure>
+        </div>
+        <p class="code-note">Excerpts from the annotated listing and the V1 port source; comments shortened. The Magician's Curse © 1986 Gremlin Graphics.</p>
       </section>
     </main>
 
