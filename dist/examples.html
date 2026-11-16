@@ -40,6 +40,7 @@
           <li><a href="#easyflash"><span>Accolade Comics</span>Disk-to-EasyFlash conversion</a></li>
           <li><a href="#bdt"><span>Last Ninja engine</span>Behaviour-driven testing</a></li>
           <li><a href="#graph"><span>Neuromancer</span>A code graph for 6502 assembler</a></li>
+          <li><a href="#vic20"><span>Cosmic Cruncher</span>VIC-20 cartridge to C64 port</a></li>
         </ul>
       </section>
 
@@ -286,6 +287,74 @@ UNKNOWN  (35)
           </figure>
         </div>
         <p class="code-note">Query output from the Neuromancer project graph, trimmed. Neuromancer © 1988 Interplay.</p>
+      </section>
+
+      <section class="case shell" id="vic20" aria-labelledby="vic20-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">05 · VIC-20 cartridge to C64 port</p>
+            <h2 id="vic20-title">Cosmic Cruncher C64 port</h2>
+            <p class="case-project">Cosmic Cruncher · Commodore, 1982 · VIC-20 8K cartridge · C64 port by TREX, 2026</p>
+            <p class="case-summary">
+              The 8 KB cartridge was disassembled and rebuilt byte for byte. The game code runs unchanged on the C64;
+              only its picture, colours, sound, joystick, keys and interrupts are carried over.
+            </p>
+          </div>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/cosmic-cruncher-c64-play.png" alt="Cosmic Cruncher running on the C64: the maze, the Cruncher and the four satellites as hardware sprites" width="384" height="272" loading="lazy" />
+            <figcaption>C64 version: the Cruncher and the four satellites are hardware sprites</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Annotated 64tass source of the cartridge ($A000–$BFFF) that rebuilds byte-identical, with memory, RAM and pointer reports.</span></li>
+              <li><span>A generated patch list: every changed byte in $A000–$BFFF sits at a listed site, 0 outside. Charset moved to $3800, the game's $00/$01 pointer moved to $FB/$FC, 11 IRQ vector pairs and 6 VIA reads redirected to C64 shims.</span></li>
+              <li><span>Two builds on one disk: the faithful version with the VIC-20 picture and speed, and a C64 version with hardware sprites. Both run on PAL and NTSC at the original's speed.</span></li>
+              <li><span>Trainer menu with five options, a high-score saver that refuses to save while an option is on, and a 10-page in-game manual.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Findings</h3>
+            <ul class="feature-list">
+              <li><span>The screen is at $1C00, not the $1E00 of an unexpanded VIC-20: the boot stores HIBASE $0288 = $1C before CINT. Reading the boot code refuted the assumption.</span></li>
+              <li><span>The game reads bonus_colour at $1046 before it ever writes it. A VIC-20 leaves non-zero power-up RAM there; the zero-filled port kept sprite characters on the top lane. The boot now stores $01, proven by a scenario.</span></li>
+              <li><span>Verification: 25 scenarios on the release build, 25 pass. Every file was read back off the D64 and matched the fresh build byte for byte.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Patch · display hook at $A37D</figcaption>
+<pre><span class="c">; original: store a cell, then swap screen/colour pointer</span>
+<span class="l">$A37D:</span> 91 00 20 BA A3
+      sta  (wptr_lo),y
+      jsr  ptr_swap_scr_col
+
+<span class="c">; port: same five bytes, cell written through to the C64 screen</span>
+<span class="l">$A37D:</span> 20 3A 37 EA EA
+      jsr  c64_sta_q
+      nop
+      nop</pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>Scenario · tests/v2/sprites_pal.feature</figcaption>
+<pre>Scenario: V2 sprites: five sprites on, cruncher at the start
+          position in cyan, satellite 0 red
+  Given the mark "v2_title"
+  When I hold the key "F1" for 6 frames
+  And I wait 150 frames
+  Then $0C is $50              <span class="c"># plr_x</span>
+  Then $0D is $30              <span class="c"># plr_y</span>
+  Then $D015@io is $1F         <span class="c"># five sprites on</span>
+  Then $D000@io is $B0
+  Then $D027@io is $F3         <span class="c"># cruncher cyan</span>
+  Then $D028@io is $F2         <span class="c"># satellite 0 red</span>
+  Then $D011@io is $1B         <span class="c"># display on</span></pre>
+          </figure>
+        </div>
+        <p class="code-note">Patch from the generated V1 patch list; scenario shortened (one Then line removed, comments added). Cosmic Cruncher © 1982 Commodore.</p>
       </section>
     </main>
 
