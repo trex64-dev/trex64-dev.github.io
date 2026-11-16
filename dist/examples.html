@@ -43,6 +43,7 @@
           <li><a href="#vic20"><span>Cosmic Cruncher</span>VIC-20 cartridge to C64 port</a></li>
           <li><a href="#c16"><span>The Magician's Curse</span>Commodore 16 to C64 port</a></li>
           <li><a href="#codename-droid"><span>Codename Droid</span>BBC Micro-to-C64 port</a></li>
+          <li><a href="#metagalactic-llamas"><span>Metagalactic Llamas</span>VIC-20 to C64 port</a></li>
         </ul>
       </section>
 
@@ -496,6 +497,84 @@ UNKNOWN  (35)
           </figure>
         </div>
         <p class="code-note">Excerpts from the project's patch table and scenario suite, trimmed. Codename Droid © 1987 Superior Software / Acornsoft.</p>
+      </section>
+
+      <section class="case shell" id="metagalactic-llamas" aria-labelledby="metagalactic-llamas-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">08 · Cross-machine port, VIC-20 to C64</p>
+            <h2 id="metagalactic-llamas-title">Metagalactic Llamas C64 port</h2>
+            <p class="case-project">Metagalactic Llamas: Battle at the Edge of Time · Llamasoft, 1983 · unexpanded VIC-20, one 3,586-byte PRG</p>
+            <p class="case-summary">
+              The VIC-20 game code runs on the C64 under a patch overlay that retargets screen, colour, raster, sound,
+              joystick, keyboard and interrupt access; the game logic is not rewritten. The release disk adds a trainer, a high-score saver and an
+              in-game manual.
+            </p>
+          </div>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/metallama-title.png" alt="Metagalactic Llamas title screen on the C64: the 22-column VIC-20 play window inside the VIC-20 border colour" width="384" height="272" loading="lazy" />
+            <figcaption>Title screen on the C64: the 22 × 23 VIC-20 window at column 9, border cells in the VIC-20 border colour</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Annotated 64tass source of the original: 1,859 lines. It rebuilds the PRG byte-identically; the port started only after this gate.</span></li>
+              <li><span>72 patches, each documented with address, original bytes, new bytes and reason. The assembler checks the original bytes at every site and fails the build on a mismatch.</span></li>
+              <li><span>Row-table relayout instead of a shadow screen: the game's row-pointer table moves from $1E00 with stride 22 to $0431 with stride 40. The screen pointer moves off the 6510 port, zero page $00/$01 to $2A/$2B.</span></li>
+              <li><span>VIC-20 sound registers $900A–$900E are mirrored to the SID in the raster IRQ. Pitch tables are generated per video standard from the VIC-20 and C64 clocks.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Speed and verification</h3>
+            <ul class="feature-list">
+              <li><span>Unpaced, the port ran at 0.70 of the original speed. Measured split: CPU clock 28 %, SID hooks 30 %, badlines 22 %, port shims 17 %, KERNAL IRQ 3 %.</span></li>
+              <li><span>A cycle-account governor paces each video standard to its own VIC-20: 1.0025 of the original on PAL and 0.9998 on NTSC over 2,048 main-loop passes. Governor cost: 1.9 % of a pass.</span></li>
+              <li><span>51 Gherkin scenarios in TRX64 cover boot, game flow, sound, speed, NTSC, high-score save, trainer, manual and the release disk. 51 of 51 pass on the release build.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="graph-gallery">
+          <figure class="case-figure pixel">
+            <img src="assets/examples/metallama-play.png" alt="Metagalactic Llamas in play on the C64: the llama on the floor line above the score panel" width="384" height="272" loading="lazy" />
+            <figcaption>In play: original game code, C64 screen and SID</figcaption>
+          </figure>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/metallama-trainer.png" alt="Trainer menu of the release disk with the options Infinite Lives and Harmless Spiders" width="384" height="272" loading="lazy" />
+            <figcaption>Trainer menu: Infinite Lives, Harmless Spiders</figcaption>
+          </figure>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Original · VIC-20 raster read at $111B</figcaption>
+<pre><span class="l">game_init:</span>
+      lda  VIC_CR4            <span class="c">; $9004: raster line / 2</span>
+      sta  rand_index         <span class="c">; seeds the random generator</span>
+<span class="l">game_start:</span>
+      lda  #$01
+      sta  level_num</pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>Port overlay · asserted patch and shim</figcaption>
+<pre><span class="l">p_jsr</span>   .macro site, op, old, target
+        .cerror ORIG[(\site)-ORIG_BASE+2] != \op, ...
+        .cerror ORIG[(\site)-ORIG_BASE+3] != (\old)&amp;$FF, ...
+        * = \site
+        jsr \target
+        .endm
+
+        #p_jsr $111B, $AD, VIC_CR4, c64_rd_raster
+
+<span class="l">c64_rd_raster:</span>            <span class="c">; A = raster bits 8..1</span>
+        lda VIC_D011
+        asl                 <span class="c">; carry = raster bit 8</span>
+        lda VIC_D012
+        ror
+        rts</pre>
+          </figure>
+        </div>
+        <p class="code-note">Excerpts from the annotated source and the port overlay, trimmed. Metagalactic Llamas © 1983 Llamasoft.</p>
       </section>
     </main>
 
