@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="C64 projects built with C64RE and TRX64: full engine reverse engineering, EasyFlash conversion, behaviour-driven testing, and a 6502 code graph."
+      content="C64 projects built with C64RE and TRX64: full engine reverse engineering, EasyFlash conversion, behaviour-driven testing, a 6502 code graph, and a BBC Micro-to-C64 port."
     />
     <meta name="theme-color" content="#070a12" />
     <title>TRX64 — Projects</title>
@@ -40,6 +40,7 @@
           <li><a href="#easyflash"><span>Accolade Comics</span>Disk-to-EasyFlash conversion</a></li>
           <li><a href="#bdt"><span>Last Ninja engine</span>Behaviour-driven testing</a></li>
           <li><a href="#graph"><span>Neuromancer</span>A code graph for 6502 assembler</a></li>
+          <li><a href="#port"><span>Codename Droid</span>BBC Micro-to-C64 port</a></li>
         </ul>
       </section>
 
@@ -286,6 +287,76 @@ UNKNOWN  (35)
           </figure>
         </div>
         <p class="code-note">Query output from the Neuromancer project graph, trimmed. Neuromancer © 1988 Interplay.</p>
+      </section>
+
+      <section class="case shell" id="port" aria-labelledby="port-title">
+        <div class="case-head">
+          <div>
+            <p class="case-kicker">05 · BBC Micro-to-C64 port</p>
+            <h2 id="port-title">Codename Droid C64 port</h2>
+            <p class="case-project">Codename Droid (Stryker's Run Part 2) · Superior Software / Acornsoft, 1987 · BBC Micro Model B</p>
+            <p class="case-summary">
+              The BBC game code runs on the C64 with 159 changed bytes. A port layer under the game replaces the MOS
+              calls, the CRTC screen, the SN76489 sound chip and the keyboard. Target: one D64, PAL and NTSC.
+            </p>
+            <span class="case-status">Ongoing work</span>
+          </div>
+          <figure class="case-figure pixel">
+            <img src="assets/examples/codename-droid-c64-level.png" alt="Codename Droid on the C64: a level with stone walls and the player droid" width="384" height="272" loading="lazy" />
+            <figcaption>In play, running from the C64 build</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <div>
+            <h3>What the tooling produced</h3>
+            <ul class="feature-list">
+              <li><span>Annotated 64tass source of the game file: 10,081 lines. Built with PORT=0, it reproduces the disc file byte-identically. Base: the radrestoration/CodenameDroid disassembly.</span></li>
+              <li><span>Port-site inventory over 6,137 instructions: 18 SHEILA I/O sites and 17 MOS entry calls. The game layout does not change: every patch keeps the length of the instruction it replaces.</span></li>
+              <li><span>Display: the game draws into its own MODE 5 buffer, unchanged. 16 hooks mark the cells a writer touches; the port converts those cells into a multicolour character set through a 256-byte bit-permutation table and swaps two screen matrices in the vertical blank.</span></li>
+              <li><span>Sound: the MOS 1.20 sound code is ported instruction for instruction from the ROM. It drives an SN76489 register model, which is converted to SID registers once per raster IRQ.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Findings</h3>
+            <ul class="feature-list">
+              <li><span>Speed: the BBC runs at 2 MHz, the C64 at about 1 MHz. Delay loops get new counts: one delay step takes 1,448 cycles on the BBC (0.724 ms); with 720 cycles it takes 0.731 ms on PAL (+0.9 %) and 0.704 ms on NTSC (−2.8 %). Frame waits follow a 50 Hz BBC tick derived per video model.</span></li>
+              <li><span>The 6510 owns $00/$01. The four enemy variables at $00–$03 move to $E4–$E7: 118 operand bytes.</span></li>
+              <li><span>Walking right, a picture update at the mid-scroll wait showed the entering column at the left edge, one row down. Measured: 33 such updates in 400 frames before the fix, 0 after.</span></li>
+              <li><span>Every change is proven by a scenario file: 153 scenarios in 91 feature files. Where a change fixes a defect, the scenario also requires the old build to fail.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-pair">
+          <figure class="code-block">
+            <figcaption>Patch · original line, then port line</figcaption>
+<pre><span class="c">; $139D  scroll right: plot entering column</span>
+      jsr  plot_column_of_tiles   <span class="c">; 20 CF 18</span>
+      jsr  <span class="l">port_hook_column</span>       <span class="c">; 20 D3 83</span>
+
+<span class="c">; $2D30  enemy fire random source</span>
+      lda  uservia_t1cl           <span class="c">; AD 64 FE</span>
+      lda  $DC04                  <span class="c">; AD 04 DC  CIA1 timer A</span>
+
+<span class="c">; $33E5  delay loop inner count</span>
+      cmp  #110                   <span class="c">; C9 6E</span>
+      cmp  #54                    <span class="c">; C9 36</span></pre>
+          </figure>
+          <figure class="code-block">
+            <figcaption>Scenario · walk_right_clean.feature</figcaption>
+<pre>Scenario: 400 frames walking right, no picture update
+          of a half-done scroll
+  Given the mark "walk_gchk_before"
+  And variant "build" loads "build/v1_gchk_13d2.bin" at $13D2
+  And variant "build" loads "build/v1_gchk_port.bin" at $8000
+  When I hold joystick 2 right for 400 frames
+  And I wait 2 frames
+  Then $C0B0 is $00 $00
+  <span class="c"># gchk_count: updates while the scroll was half done</span>
+  Then $D011@io is one of $1B, $9B
+  Then the baseline fails</pre>
+          </figure>
+        </div>
+        <p class="code-note">Excerpts from the project's patch table and scenario suite, trimmed. Codename Droid © 1987 Superior Software / Acornsoft.</p>
       </section>
     </main>
 
