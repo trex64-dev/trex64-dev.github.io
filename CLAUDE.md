@@ -29,7 +29,7 @@ This repo contains no C64 media and is not a C64RE project — it only describes
 - Responsive breakpoints are defined near each layout group; `prefers-reduced-motion` is handled.
 - `index.html` contains the concise hero, the project-centered `#ecosystem` map, and the four destination links.
 - `reverse-engineering.html` documents C64RE, the LLM/MCP responsibility split, the 6502 graph, the five-stage workflow, and TRX64 Runtime validation.
-- `fpga-platform.html` documents private-development status, the MultiCore loading architecture, TRX64 Ultimate, UE2, and unsupported example cores.
+- `fpga-platform.html` documents the public MultiCore platform, its loading architecture, TRX64 Ultimate, UE2, and the experimental machine cores.
 - `documentation.html` is the component and repository index.
 - `examples.html`: one `.case` section per capability hook, each backed by one project (`#engine` Wasteland, `#easyflash` Accolade Comics, `#bdt` Last Ninja engine, `#graph` Neuromancer, `#vic20` Cosmic Cruncher, `#c16` The Magician's Curse, `#codename-droid` Codename Droid, `#metagalactic-llamas` Metagalactic Llamas). Screenshots in `dist/assets/examples/`. Figures and code excerpts are verified against the project files, not taken from session reports.
 - The visual language assigns cyan to analysis/C64RE, violet to runtime/host infrastructure, and coral to FPGA/Ultimate target content.
@@ -42,7 +42,7 @@ This repo contains no C64 media and is not a C64RE project — it only describes
 - MultiCore has three distinct start paths. A partial `.cor` replaces only `pb_l2` through ICAP while the installed host remains active and communicates through the versioned contract. A large `.cor` is a full-device bitstream started through IPROG; it carries the machine, a deliberate host copy, and the generic core application. A `.cfw` is external full firmware with its own application, not a MultiCore core. Never describe large cores as using the partial-core contract.
 - Treat the current `TRX64U-MultiCore` README, `CORES.md`, and developer guides as the source of truth. The exported “TRX64 Ultimate MultiCore - Architecture manual” is a structural and visual reference dated 2026-11-02; its core list, status, counts, measurements, and build details may be stale.
 - The umbrella name is **TRX64**, not TREX64. Keep the project at the center. Reverse engineering forms the inner environment; software execution and Ultimate hardware form the outer platform. MultiCore is a deployment mechanism, not a peer product domain.
-- TRX64 Ultimate is the supported core. Other Commodore cores are experimental porting targets. Non-Commodore and console cores are unsupported board-capability showcases.
+- TRX64 Ultimate is the native TRX64 core. All MultiCore release cores remain experimental; the published core table records current functionality and known limits.
 - C64RE workflow must match C64RE itself: 5 project stages containing a 7-phase per-artifact pipeline. Static first, runtime only confirms. The structural graph is built when the analysis report is imported (phase 3); semantic annotations form a separate human layer (phase 5).
 - C64RE is LLM/API-first but embeds no LLM: Claude Code, Codex or another MCP harness drives it. Deterministic tools produce the disassembly; the LLM adds meaning and knowledge (annotations, evidence).
 - Verify C64RE claims against its current source/doctrine, not against this page or a stale GitNexus index.
